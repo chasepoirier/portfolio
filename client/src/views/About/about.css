@@ -1,0 +1,10 @@
+.page.about .page-wrapper.flex-wrapper {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1140px;
+}
+
+.page.about .page-wrapper.flex-wrapper strong {
+  font-weight: 500;
+  color: #222;
+}

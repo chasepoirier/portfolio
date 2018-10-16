@@ -1,0 +1,40 @@
+{
+  "name": "website",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm run build",
+    "start": "node ./build/bin/port.js",
+    "dev": "npm run start-server && npm run start-client",
+    "client": "cd client && npm start",
+    "server": "NODE_ENV=dev nodemon --exec babel-node -- ./server/bin/port.js",
+    "clean": "rm -rf build && mkdir build",
+    "build": "npm run clean && npm run build-server && npm run build-client",
+    "build-server": "babel -d ./build ./server -s",
+    "build-client": "cd client && npm install && npm run build"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "0.1.0-11",
+    "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "bcrypt": "^2.0.1",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-force-https": "^1.0.0",
+    "forcedomain": "^1.0.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.4",
+    "morgan": "~1.9.0",
+    "pug": "2.0.0-beta11",
+    "serve-favicon": "~2.4.5",
+    "systeminformation": "^3.42.4"
+  }
+}

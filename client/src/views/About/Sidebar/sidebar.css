@@ -1,0 +1,4 @@
+.about-sidebar {
+  width: calc(40% - 15px);
+  max-width: 380px;
+}

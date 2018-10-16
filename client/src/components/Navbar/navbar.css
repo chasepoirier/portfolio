@@ -1,0 +1,108 @@
+.navbar {
+  width: 95%;
+  height: 90px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10000;
+  position: relative;
+}
+
+.navbar a {
+  outline: none;
+  text-decoration: none;
+  color: #222;
+  font-size: 14px;
+}
+
+.navbar .right-col,
+.navbar .left-col,
+.navbar .center-col {
+  width: calc(100% / 3);
+}
+
+.navbar .left-col a {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.navbar .center-col {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar .center-col a {
+  margin: 0 30px;
+  position: relative;
+  font-weight: 500;
+}
+
+.navbar .center-col a:before {
+  width: calc(100% + 10px);
+  height: 2px;
+  background-color: #222;
+  position: absolute;
+  top: 10px;
+  left: -5px;
+  content: '';
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform-origin 0s ease 0.25s;
+}
+
+@keyframes hoverLink {
+  0% {
+    transform: scaleX(0);
+  }
+
+  50% {
+    transform: scaleX(1);
+  }
+
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+.navbar .center-col a:hover:before {
+  transform-origin: right;
+  animation: hoverLink 0.5s ease;
+}
+
+.navbar .center-col a.active:hover:before {
+  animation: none;
+}
+
+.navbar .center-col a.active:before {
+  transform-origin: left;
+  transition: transform 0.2s;
+  transform: scaleX(1);
+}
+
+/*.navbar .center-col a:not(:hover):before {
+	transition-delay: .2s;
+	transform-origin: right;
+}*/
+
+.navbar .right-col a {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 12px;
+}
+
+.navbar .right-col a img {
+  width: 35px;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.navbar .right-col a:before {
+  display: inline-block;
+  content: 'Coding Nomad';
+  margin-right: 10px;
+  margin-top: 6px;
+}

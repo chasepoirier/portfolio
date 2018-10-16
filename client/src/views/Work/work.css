@@ -1,0 +1,6 @@
+.transition-wrapper .page.work {
+  width: 100%;
+  max-width: 1200px;
+  left: calc(50% - 600px);
+  height: 100%;
+}
