@@ -1,20 +1,20 @@
+import { sliderOperations } from 'ducks/slider'
+import { AppState } from 'modules/utils/types'
 import * as React from 'react'
-
+import { connect } from 'react-redux'
 import './slider-controls.css'
 
 interface Props {
-  currentSlide: number
   setCurrentSlide: any
-  sliderIsMoving: boolean
   totalSlides: number
-  calculatePercentTraveled: any
-  toggleSliderIsMoving: (moving: boolean) => void
+  slider: AppState['slider']
+  toggleMovingSlider: typeof sliderOperations.toggleSliderMoving
+  updateCurrentSlide: typeof sliderOperations.updateCurrentSlide
+  updatePercentTraveled: typeof sliderOperations.updatePercentTraveled
 }
 
 interface State {
-  controllerWasClicked: boolean
-  currentSlide: number
-  innerOffset: number
+  controllerIsClicked: boolean
   offset: number
 }
 
@@ -28,9 +28,7 @@ class SliderControls extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      controllerWasClicked: false,
-      currentSlide: this.props.currentSlide,
-      innerOffset: 45,
+      controllerIsClicked: false,
       offset: 0
     }
 
@@ -49,77 +47,91 @@ class SliderControls extends React.Component<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-    if (prevProps.currentSlide !== this.props.currentSlide) {
-      this.setState({ currentSlide: this.props.currentSlide })
-      this.calculateEndSliderPos(this.props.currentSlide)
+    if (prevProps.slider.currentSlide !== this.props.slider.currentSlide) {
+      // update the position of the controller
+      this.calculateEndSliderPos(this.props.slider.currentSlide)
     }
   }
 
   public handleMouseDown = () => {
     const body = document.querySelector('body')
+    const { current: controller } = this.controller
     if (body) {
       body.style.userSelect = 'none'
     }
-    if (this.controller.current && this.controller.current.parentElement) {
-      const offset = this.controller.current.parentElement.getBoundingClientRect()
-        .left
-      this.props.toggleSliderIsMoving(true)
-      this.setState({ offset, controllerWasClicked: true })
+    if (controller && controller.parentElement) {
+      const offset = controller.parentElement.getBoundingClientRect().left
+      this.props.toggleMovingSlider(true)
+      this.setState({ offset, controllerIsClicked: true })
     }
   }
 
   public handleMouseUp = (e: React.MouseEvent<HTMLElement>) => {
-    if (this.props.sliderIsMoving && this.state.controllerWasClicked) {
+    if (this.props.slider.sliderIsMoving && this.state.controllerIsClicked) {
       const body = document.querySelector('body')
       if (body) {
         body.style.userSelect = 'inheret'
       }
-      this.props.toggleSliderIsMoving(false)
-      this.props.setCurrentSlide(this.state.currentSlide, true)
-      this.calculateEndSliderPos(this.props.currentSlide)
-      this.setState({ controllerWasClicked: false })
+
+      const {
+        toggleMovingSlider,
+        setCurrentSlide,
+        slider: { currentSlide }
+      } = this.props
+      toggleMovingSlider(false)
+      setCurrentSlide(currentSlide, true)
+      this.calculateEndSliderPos(currentSlide)
+      this.setState({ controllerIsClicked: false })
     }
   }
 
   public handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (this.state.controllerWasClicked && this.controller.current) {
+    if (this.state.controllerIsClicked && this.controller.current) {
       const { style, offsetWidth } = this.controller.current
-      const { innerOffset } = this.state
+      const { innerOffset } = this.props.slider
       const pos = e.clientX - this.state.offset - offsetWidth / 2
 
       const max = this.calculateTotalSliderLength()
       const totalLength = max + innerOffset * 2
 
-      if (this.props.sliderIsMoving) {
-        if (pos < -innerOffset) {
-          style.transform = `translateX(${-innerOffset}px)`
-          this.props.calculatePercentTraveled(0, totalLength)
-        } else if (pos > max + innerOffset) {
-          style.transform = `translateX(${max + innerOffset}px)`
-          this.props.calculatePercentTraveled(totalLength, totalLength)
-        } else {
-          style.transform = `translateX(${pos}px)`
-          this.calculateCurrentSlide(pos, totalLength)
-          this.props.calculatePercentTraveled(pos + innerOffset, totalLength)
-        }
+      if (pos < -innerOffset) {
+        style.transform = `translateX(${-innerOffset}px)`
+        this.calculatePercentTraveled(0, totalLength)
+      } else if (pos > max + innerOffset) {
+        style.transform = `translateX(${max + innerOffset}px)`
+        this.calculatePercentTraveled(totalLength, totalLength)
+      } else {
+        style.transform = `translateX(${pos}px)`
+        this.calculateCurrentSlide(pos, totalLength)
+        this.calculatePercentTraveled(pos + innerOffset, totalLength)
       }
     }
   }
 
   public calculateCurrentSlide = (pos: number, totalLength: number) => {
-    const { currentSlide, innerOffset } = this.state
+    const {
+      slider: { currentSlide, innerOffset },
+      updateCurrentSlide
+    } = this.props
     const lenghtOfOneSlide = totalLength / (this.props.totalSlides - 1)
     const currentSlidePos = lenghtOfOneSlide * (currentSlide - 1) - innerOffset
 
     if (pos > currentSlidePos + lenghtOfOneSlide / 2) {
-      this.setState({ currentSlide: this.state.currentSlide + 1 })
+      updateCurrentSlide(currentSlide + 1)
     } else if (pos < currentSlidePos - lenghtOfOneSlide / 2) {
-      this.setState({ currentSlide: this.state.currentSlide - 1 })
+      updateCurrentSlide(currentSlide - 1)
     }
   }
 
+  // determines how far slider has moved relative to start
+  public calculatePercentTraveled = (pos: number, totalLength: number) => {
+    const percentTraveled = (pos / totalLength) * 100
+    this.props.updatePercentTraveled(percentTraveled)
+  }
+
+  // moves the slider to it's final position relative to current slide
   public calculateEndSliderPos = (current: number) => {
-    const { innerOffset } = this.state
+    const { innerOffset } = this.props.slider
     const totalLength = this.calculateTotalSliderLength() + innerOffset * 2
     const lenghtOfOneSlide = totalLength / (this.props.totalSlides - 1)
     const currentSlidePos = lenghtOfOneSlide * (current - 1) - innerOffset
@@ -129,14 +141,17 @@ class SliderControls extends React.Component<Props, State> {
     }
   }
 
+  // returns a pixel value of the total slider length
   public calculateTotalSliderLength = () => {
-    if (this.controller.current && this.controller.current.parentElement) {
-      const { parentElement, offsetWidth } = this.controller.current
+    const { current: controller } = this.controller
+    if (controller && controller.parentElement) {
+      const { parentElement, offsetWidth } = controller
       return parentElement.offsetWidth - offsetWidth
     }
     return 0
   }
 
+  // returns the number of the project
   public renderNumbersForProjects = () => {
     const numbers = []
 
@@ -165,7 +180,7 @@ class SliderControls extends React.Component<Props, State> {
           >
             <div className="controller">
               <div className="current-project">{`0${
-                this.state.currentSlide
+                this.props.slider.currentSlide
               }`}</div>
               <div className="instructions">HOLD & DRAG</div>
             </div>
@@ -179,4 +194,15 @@ class SliderControls extends React.Component<Props, State> {
   }
 }
 
-export default SliderControls
+const mapStateToProps = (state: AppState) => ({
+  slider: state.slider
+})
+
+export default connect(
+  mapStateToProps,
+  {
+    toggleMovingSlider: sliderOperations.toggleSliderMoving,
+    updateCurrentSlide: sliderOperations.updateCurrentSlide,
+    updatePercentTraveled: sliderOperations.updatePercentTraveled
+  }
+)(SliderControls)

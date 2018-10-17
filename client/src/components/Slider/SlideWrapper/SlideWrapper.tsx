@@ -1,28 +1,26 @@
+import { AppState } from 'modules/utils/types'
 import * as React from 'react'
+import { connect } from 'react-redux'
 import { animateSlider } from '../../../utils/animations'
 
 interface Props {
-  currentSlide: number
-  percentTraveled: number
   totalSlides: number
-  sliderIsMoving: boolean
+  slider: AppState['slider']
 }
 
 interface State {
   slideWasClicked: boolean
-  currentSlide: number
   offset: number
   startingMouseX: number
 }
 
-export default class SlideWrapper extends React.Component<Props, State> {
+class SlideWrapper extends React.Component<Props, State> {
   private slideContainer = React.createRef<HTMLUListElement>()
   private slider = React.createRef<HTMLDivElement>()
 
   constructor(props: Props) {
     super(props)
     this.state = {
-      currentSlide: props.currentSlide,
       offset: 0,
       slideWasClicked: false,
       startingMouseX: 0
@@ -31,10 +29,8 @@ export default class SlideWrapper extends React.Component<Props, State> {
 
   public componentDidUpdate(prevProps: Props) {
     const {
-      percentTraveled,
       totalSlides,
-      sliderIsMoving,
-      currentSlide
+      slider: { sliderIsMoving, currentSlide, percentTraveled }
     } = this.props
 
     if (!this.state.slideWasClicked) {
@@ -46,10 +42,6 @@ export default class SlideWrapper extends React.Component<Props, State> {
       } else {
         const distance = -(slideLength * (currentSlide - 1))
         animateSlider(0.8, distance)
-      }
-
-      if (this.state.currentSlide !== currentSlide) {
-        this.setState({ currentSlide })
       }
     }
   }
@@ -66,7 +58,10 @@ export default class SlideWrapper extends React.Component<Props, State> {
   }
 
   public render() {
-    const { sliderIsMoving, children } = this.props
+    const {
+      slider: { sliderIsMoving },
+      children
+    } = this.props
     return (
       <div
         ref={this.slider}
@@ -81,3 +76,9 @@ export default class SlideWrapper extends React.Component<Props, State> {
     )
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  slider: state.slider
+})
+
+export default connect(mapStateToProps)(SlideWrapper)

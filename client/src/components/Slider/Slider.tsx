@@ -1,4 +1,4 @@
-import { updateCurrentSlide } from 'ducks/slider/operations'
+import { sliderOperations } from 'ducks/slider'
 import { AppState } from 'modules/utils/types'
 import * as React from 'react'
 import { connect } from 'react-redux'
@@ -10,13 +10,9 @@ import SliderControls from './SliderControls'
 import SlideWrapper from './SlideWrapper'
 
 // utils
-
 import './slider.css'
 
 interface State {
-  currentSlide: number
-  sliderIsMoving: boolean
-  percentTraveled: number
   canScroll: boolean
 }
 
@@ -24,14 +20,13 @@ interface Props {
   slides: any
   textures: string[]
   slider: AppState['slider']
+  updateCurrentSlide: (current: number) => void
+  updatePercentTraveled: (percentTraveled: number) => void
 }
 
 class Slider extends React.Component<Props, State> {
   public state = {
-    canScroll: true,
-    currentSlide: 1,
-    percentTraveled: 0,
-    sliderIsMoving: false
+    canScroll: true
   }
 
   public boundScroll = () => this.onscroll.bind(this)
@@ -63,41 +58,39 @@ class Slider extends React.Component<Props, State> {
   }
 
   public countUp = () => {
-    const current = this.state.currentSlide
-
-    if (current === this.props.slides.length) {
-      this.setState({
-        currentSlide: 1,
-        percentTraveled: 0
-      })
+    const {
+      updatePercentTraveled,
+      updateCurrentSlide,
+      slider: { currentSlide }
+    } = this.props
+    if (currentSlide === this.props.slides.length) {
+      updateCurrentSlide(1)
+      updatePercentTraveled(0)
     } else {
-      this.setState({
-        currentSlide: current + 1,
-        percentTraveled: this.setPercentTraveled(current)
-      })
+      updateCurrentSlide(currentSlide + 1)
+      updatePercentTraveled(this.setPercentTraveled(currentSlide))
     }
   }
 
   public countDown = () => {
-    const current = this.state.currentSlide
-    if (current === 1) {
-      this.setState({
-        currentSlide: this.props.slides.length,
-        percentTraveled: 100
-      })
+    const {
+      updatePercentTraveled,
+      updateCurrentSlide,
+      slider: { currentSlide }
+    } = this.props
+    if (currentSlide === 1) {
+      updateCurrentSlide(this.props.slides.length)
+      updatePercentTraveled(100)
     } else {
-      this.setState({
-        currentSlide: current - 1,
-        percentTraveled: this.setPercentTraveled(current - 2)
-      })
+      updateCurrentSlide(currentSlide - 1)
+      updatePercentTraveled(this.setPercentTraveled(currentSlide - 2))
     }
   }
 
   public setCurrentSlide = (slide: any, expanding: any) => {
-    this.setState({
-      currentSlide: slide,
-      percentTraveled: this.setPercentTraveled(slide - 1)
-    })
+    const { updatePercentTraveled, updateCurrentSlide } = this.props
+    updateCurrentSlide(slide)
+    updatePercentTraveled(this.setPercentTraveled(slide - 1))
     // wait 1 ms until for state to reset before transitioning
     if (!expanding) {
       setTimeout(() => slideTransitionAnimation(), 1)
@@ -107,22 +100,13 @@ class Slider extends React.Component<Props, State> {
   public setPercentTraveled = (slide: any) =>
     (slide / (this.props.slides.length - 1)) * 100
 
-  public calculatePercentTraveled = (pos: any, totalLength: any) => {
-    const percentTraveled = (pos / totalLength) * 100
-    this.setState({ percentTraveled })
-  }
-
-  public toggleSliderIsMoving = (moving: boolean) => {
-    this.setState({ sliderIsMoving: moving })
-  }
-
   public renderSlides = () => {
     return this.props.slides.map((slide: any, index: number) => {
       return (
         <Slide
           key={slide.title}
           id={index + 1}
-          current={this.state.currentSlide}
+          current={this.props.slider.currentSlide}
           slide={slide}
           texture={this.props.textures[index]}
         />
@@ -131,26 +115,15 @@ class Slider extends React.Component<Props, State> {
   }
 
   public render() {
-    const { percentTraveled, sliderIsMoving } = this.state
-
     return (
       <div className="slider">
-        <SlideWrapper
-          sliderIsMoving={sliderIsMoving}
-          currentSlide={this.props.slider.currentSlide}
-          percentTraveled={percentTraveled}
-          totalSlides={this.props.slides.length}
-        >
+        <SlideWrapper totalSlides={this.props.slides.length}>
           {this.renderSlides()}
         </SlideWrapper>
 
         <SliderControls
           setCurrentSlide={this.setCurrentSlide}
-          currentSlide={this.props.slider.currentSlide}
-          toggleSliderIsMoving={this.toggleSliderIsMoving}
-          sliderIsMoving={sliderIsMoving}
           totalSlides={this.props.slides.length}
-          calculatePercentTraveled={this.calculatePercentTraveled}
         />
       </div>
     )
@@ -163,5 +136,8 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
   mapStateToProps,
-  { updateCurrentSlide }
+  {
+    updateCurrentSlide: sliderOperations.updateCurrentSlide,
+    updatePercentTraveled: sliderOperations.updatePercentTraveled
+  }
 )(Slider)

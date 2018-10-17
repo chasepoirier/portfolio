@@ -20,8 +20,12 @@ import * as types from './types'
 // })
 
 export const Actions = {
+  toggleSliderMoving: (toggle: boolean) =>
+    createAction(types.TOGGLE_SLIDER_MOVING, { toggle }),
   updateCurrentSlide: (current: number) =>
-    createAction(types.UPDATE_CURRENT_SLIDE, { current })
+    createAction(types.UPDATE_CURRENT_SLIDE, { current }),
+  updatePercentTraveled: (percentTraveled: number) =>
+    createAction(types.UPDATE_PERCENT_TRAVELED, { percentTraveled })
 }
 
 export type Actions = ActionsUnion<typeof Actions>
