@@ -11,7 +11,8 @@
     "clean": "rm -rf build && mkdir build",
     "build": "npm run clean && npm run build-server && npm run build-client",
     "build-server": "babel -d ./build ./server -s",
-    "build-client": "cd client && npm install && npm run build"
+    "build-client": "cd client && npm install && npm run build",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
@@ -30,11 +31,19 @@
     "express": "^4.16.3",
     "express-force-https": "^1.0.0",
     "forcedomain": "^1.0.0",
+    "husky": "^0.14.3",
     "jsonwebtoken": "^8.3.0",
+    "lint-staged": "^7.0.4",
     "mongoose": "^5.2.4",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11",
     "serve-favicon": "~2.4.5",
     "systeminformation": "^3.42.4"
+  },
+  "lint-staged": {
+    "*.{ts, tsx, js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
