@@ -5,24 +5,24 @@ import Canvas from 'utils/webGL'
 
 import './slide.css'
 
-interface IState {
+interface State {
   image: string
 }
 
-interface IProps {
+interface Props {
   texture: string
   current: number
   id: any
   slide: any
 }
 
-class Slide extends React.Component<IProps, IState> {
+class Slide extends React.Component<Props, State> {
   private boundResizeCanvas: any
   private boundMouseMove: any
   private canvas: any
   private canvasRef = React.createRef<HTMLDivElement>()
 
-  constructor(props: IProps) {
+  constructor(props: Props) {
     super(props)
 
     this.state = {
@@ -45,7 +45,7 @@ class Slide extends React.Component<IProps, IState> {
     // this.refs.mainImg.complete && this.imageLoaded
   }
 
-  public componentDidUpdate(prevProps: IProps) {
+  public componentDidUpdate(prevProps: Props) {
     if (this.canvas !== null) {
       if (
         prevProps.current !== this.props.current &&

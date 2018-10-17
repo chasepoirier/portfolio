@@ -3,14 +3,14 @@ import getTypeFromClassName from './getTypeFromClassName'
 
 const ease = Power3.easeOut
 
-export const animateSlider = (duration: any, distance: any, slide: any) => {
+export const animateSlider = (duration: number, distance: number) => {
   TweenMax.to('.slide-container', duration, {
     ease: Power3.easeOut,
     x: distance
   })
 }
 
-export const introPageAnimation = (node: any) => {
+export const introPageAnimation = (node: HTMLElement) => {
   const type = getTypeFromClassName(node.classList)
   switch (type) {
     case 'home':
@@ -24,7 +24,7 @@ export const introPageAnimation = (node: any) => {
   }
 }
 
-export const outroPageAnimation = (node: any) => {
+export const outroPageAnimation = (node: HTMLElement) => {
   TweenMax.fromTo(node, 0.35, { opacity: 1 }, { opacity: 0, ease })
 }
 

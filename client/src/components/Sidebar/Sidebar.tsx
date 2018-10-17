@@ -28,13 +28,13 @@ const Icon = ({ icon }: { icon: any }) => (
   </a>
 )
 
-interface IProps {
+interface Props {
   toggleContactForm: any
   fixed: any
   display: any
 }
 
-const Sidebar = ({ toggleContactForm, fixed, display }: IProps) => (
+const Sidebar = ({ toggleContactForm, fixed, display }: Props) => (
   <div className={display ? 'static-container' : 'none'}>
     <div className="sidebar">
       {renderIcons()}

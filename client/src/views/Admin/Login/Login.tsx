@@ -8,11 +8,11 @@ import setAuthorizationHeader from 'utils/setAuthHeaders'
 
 import './login.css'
 
-interface IProps extends RouteComponentProps<{}> {
+interface Props extends RouteComponentProps<{}> {
   history: History
 }
 
-interface IState {
+interface State {
   data: {
     username: string
     password: string
@@ -21,7 +21,7 @@ interface IState {
   errors: string
 }
 
-class Login extends React.Component<IProps, IState> {
+class Login extends React.Component<Props, State> {
   public state = {
     data: {
       password: '',

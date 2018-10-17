@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import './contact.css'
 
-interface IState {
+interface State {
   form: {
     name: string
     email: string
@@ -10,12 +10,12 @@ interface IState {
   }
 }
 
-interface IProps {
+interface Props {
   scrollable: any
   toggleContactForm: any
 }
 
-class Contact extends React.Component<IProps, IState> {
+class Contact extends React.Component<Props, State> {
   public state = {
     form: {
       email: '',

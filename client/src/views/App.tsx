@@ -26,12 +26,12 @@ import sliderMetaData from '../data/sliderMetaData'
 
 // library.add(fainstagram);
 
-interface IProps extends RouteComponentProps {
+interface Props extends RouteComponentProps {
   history: History
   location: History['location']
 }
 
-interface IState {
+interface State {
   loaded: boolean
   location: {
     city?: string
@@ -47,7 +47,7 @@ interface IState {
   textures: any
 }
 
-class App extends React.Component<IProps, IState> {
+class App extends React.Component<Props, State> {
   public pageRef = React.createRef<HTMLDivElement>()
 
   public state = {
@@ -81,7 +81,7 @@ class App extends React.Component<IProps, IState> {
     })
   }
 
-  public componentDidUpdate(prevProps: any, prevState: IState) {
+  public componentDidUpdate(prevProps: any, prevState: State) {
     if (
       prevState.showContact !== this.state.showContact &&
       this.pageRef.current

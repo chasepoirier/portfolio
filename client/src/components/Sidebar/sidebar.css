@@ -25,12 +25,6 @@
 }
 
 .main-page.scrollable .sidebar {
-  /* position: fixed; */
-  /* bottom: 25px;
-	left: 0px; */
-}
-
-.main-page.scrollable .sidebar {
   visibility: hidden;
   opacity: 0;
 }
@@ -111,7 +105,7 @@
   height: 100%;
 }
 
-.sidebar .chat-btn:hover:before {
+/* .sidebar .chat-btn:hover:before {
   border-top-color: #888;
   border-right-color: #888;
   transition: width 0.1s ease-out, height 0.1s ease-out 0.1s;
@@ -122,7 +116,7 @@
   border-left-color: #888;
   transition: border-color 0s ease-out 0.2s, width 0.1s ease-out 0.2s,
     height 0.1s ease-out 0.3s;
-}
+} */
 
 .sidebar .chat-btn .btn-text {
   height: 100%;
@@ -144,7 +138,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /*background-color: #222;*/
   display: flex;
   justify-content: center;
   align-items: center;

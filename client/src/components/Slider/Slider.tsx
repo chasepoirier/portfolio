@@ -1,4 +1,7 @@
+import { updateCurrentSlide } from 'ducks/slider/operations'
+import { AppState } from 'modules/utils/types'
 import * as React from 'react'
+import { connect } from 'react-redux'
 import { slideTransitionAnimation } from 'utils/animations'
 
 // components
@@ -10,19 +13,20 @@ import SlideWrapper from './SlideWrapper'
 
 import './slider.css'
 
-interface IState {
+interface State {
   currentSlide: number
   sliderIsMoving: boolean
   percentTraveled: number
   canScroll: boolean
 }
 
-interface IProps {
+interface Props {
   slides: any
-  textures: any
+  textures: string[]
+  slider: AppState['slider']
 }
 
-class Slider extends React.Component<IProps, IState> {
+class Slider extends React.Component<Props, State> {
   public state = {
     canScroll: true,
     currentSlide: 1,
@@ -108,8 +112,8 @@ class Slider extends React.Component<IProps, IState> {
     this.setState({ percentTraveled })
   }
 
-  public toggleSliderIsMoving = (bool: boolean) => {
-    this.setState({ sliderIsMoving: bool })
+  public toggleSliderIsMoving = (moving: boolean) => {
+    this.setState({ sliderIsMoving: moving })
   }
 
   public renderSlides = () => {
@@ -127,24 +131,24 @@ class Slider extends React.Component<IProps, IState> {
   }
 
   public render() {
+    const { percentTraveled, sliderIsMoving } = this.state
+
     return (
       <div className="slider">
         <SlideWrapper
-          sliderIsMoving={this.state.sliderIsMoving}
-          currentSlide={this.state.currentSlide}
-          toggleSliderIsMoving={this.toggleSliderIsMoving}
-          percentTraveled={this.state.percentTraveled}
+          sliderIsMoving={sliderIsMoving}
+          currentSlide={this.props.slider.currentSlide}
+          percentTraveled={percentTraveled}
           totalSlides={this.props.slides.length}
-          setCurrentSlide={this.setCurrentSlide}
         >
           {this.renderSlides()}
         </SlideWrapper>
 
         <SliderControls
           setCurrentSlide={this.setCurrentSlide}
-          currentSlide={this.state.currentSlide}
+          currentSlide={this.props.slider.currentSlide}
           toggleSliderIsMoving={this.toggleSliderIsMoving}
-          sliderIsMoving={this.state.sliderIsMoving}
+          sliderIsMoving={sliderIsMoving}
           totalSlides={this.props.slides.length}
           calculatePercentTraveled={this.calculatePercentTraveled}
         />
@@ -153,4 +157,11 @@ class Slider extends React.Component<IProps, IState> {
   }
 }
 
-export default Slider
+const mapStateToProps = (state: AppState) => ({
+  slider: state.slider
+})
+
+export default connect(
+  mapStateToProps,
+  { updateCurrentSlide }
+)(Slider)

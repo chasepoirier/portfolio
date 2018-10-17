@@ -4,7 +4,7 @@ import './about.css'
 import ContentContainer from './ContentContainer'
 import Sidebar from './Sidebar'
 
-interface IProps {
+interface Props {
   location: {
     city: string
     code: string
@@ -12,7 +12,7 @@ interface IProps {
   toggleScrollablePage: (toggle: boolean) => void
 }
 
-class About extends React.Component<IProps> {
+class About extends React.Component<Props> {
   public componentWillMount() {
     this.props.toggleScrollablePage(true)
   }

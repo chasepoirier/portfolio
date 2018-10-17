@@ -2,29 +2,29 @@ import * as React from 'react'
 
 import './slider-controls.css'
 
-interface IProps {
+interface Props {
   currentSlide: number
-  toggleSliderIsMoving: any
   setCurrentSlide: any
   sliderIsMoving: boolean
   totalSlides: number
   calculatePercentTraveled: any
+  toggleSliderIsMoving: (moving: boolean) => void
 }
 
-interface IState {
+interface State {
   controllerWasClicked: boolean
   currentSlide: number
   innerOffset: number
   offset: number
 }
 
-class SliderControls extends React.Component<IProps, IState> {
+class SliderControls extends React.Component<Props, State> {
   private boundHandleMouseMove: any
   private boundHandleMouseUp: any
 
   private controller = React.createRef<HTMLDivElement>()
 
-  constructor(props: IProps) {
+  constructor(props: Props) {
     super(props)
 
     this.state = {
@@ -48,7 +48,7 @@ class SliderControls extends React.Component<IProps, IState> {
     window.removeEventListener('mouseup', this.boundHandleMouseUp)
   }
 
-  public componentDidUpdate(prevProps: IProps) {
+  public componentDidUpdate(prevProps: Props) {
     if (prevProps.currentSlide !== this.props.currentSlide) {
       this.setState({ currentSlide: this.props.currentSlide })
       this.calculateEndSliderPos(this.props.currentSlide)
@@ -86,6 +86,7 @@ class SliderControls extends React.Component<IProps, IState> {
       const { style, offsetWidth } = this.controller.current
       const { innerOffset } = this.state
       const pos = e.clientX - this.state.offset - offsetWidth / 2
+
       const max = this.calculateTotalSliderLength()
       const totalLength = max + innerOffset * 2
 

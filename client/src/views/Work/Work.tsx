@@ -2,12 +2,12 @@ import Slider from 'components/Slider'
 import * as React from 'react'
 import './work.css'
 
-interface IProps {
+interface Props {
   slides: any
   textures: any
 }
 
-class Work extends React.Component<IProps> {
+class Work extends React.Component<Props> {
   public render() {
     const { slides, textures } = this.props
     return (

@@ -7,11 +7,11 @@ const icons = {
   linkedin: 'https://www.linkedin.com/in/chase-poirier-60898096/'
 }
 
-interface IProps {
+interface Props {
   location: any
 }
 
-const ContentContainer = ({ location }: IProps) => (
+const ContentContainer = ({ location }: Props) => (
   <div className="main-container">
     <h3 className="header">Hey, I'm Chase.</h3>
     <img src={require('../../../images/me.jpg')} alt="it's me" />

@@ -2,6 +2,7 @@
   from {
     overflow: visible;
   }
+
   to {
     overflow: hidden;
   }
@@ -27,15 +28,6 @@
   align-items: center;
 }
 
-.slider .slide-wrapper:hover {
-  cursor: -webkit-grab;
-  cursor: grab;
-}
-
-.slider .slide-wrapper:active {
-  cursor: grabbing;
-  cursor: -webkit-grabbing;
-}
 
 .slider .slide-wrapper.moving {
   overflow: visible;
