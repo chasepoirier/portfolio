@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import './slider-controls.css'
 
 interface Props {
-  setCurrentSlide: any
+  setCurrentSlide: (slide: number, expanding: boolean) => void
   totalSlides: number
   slider: AppState['slider']
   toggleMovingSlider: typeof sliderOperations.toggleSliderMoving
@@ -160,7 +160,7 @@ class SliderControls extends React.Component<Props, State> {
         <div
           key={i}
           className="number"
-          onClick={() => this.props.setCurrentSlide(i + 1)}
+          onClick={() => this.props.setCurrentSlide(i + 1, false)}
         >
           {`0${i + 1}`}
         </div>

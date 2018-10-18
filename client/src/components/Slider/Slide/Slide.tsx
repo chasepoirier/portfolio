@@ -1,57 +1,47 @@
 import * as React from 'react'
 // import { Link } from "react-router-dom";
-
 import Canvas from 'utils/webGL'
 
 import './slide.css'
 
-interface State {
-  image: string
-}
-
 interface Props {
   texture: string
   current: number
-  id: any
+  id: number
   slide: any
 }
 
-class Slide extends React.Component<Props, State> {
+class Slide extends React.Component<Props> {
   private boundResizeCanvas: any
-  private boundMouseMove: any
-  private canvas: any
+  private canvas: Canvas
   private canvasRef = React.createRef<HTMLDivElement>()
 
   constructor(props: Props) {
     super(props)
 
-    this.state = {
-      image: ''
-    }
     this.boundResizeCanvas = this.resizeCanvas.bind(this)
-    this.boundMouseMove = this.mouseMove.bind(this)
   }
 
   public componentDidMount() {
-    this.canvas = new Canvas(this.props.texture)
-    this.canvas.initCanvas(this.canvasRef.current)
+    /**
+     * Delay initializing of canvas until outro
+     * animation of previous page is finished
+     */
     setTimeout(() => {
-      this.canvas.startAnimation()
-      // this.canvas.stopAnimation();
-    }, 250)
-    window.addEventListener('resize', this.boundResizeCanvas)
-    window.addEventListener('mousemove', this.boundMouseMove)
+      this.canvas = new Canvas(this.props.texture)
+      this.canvas.initCanvas(this.canvasRef.current)
 
-    // this.refs.mainImg.complete && this.imageLoaded
+      if (this.props.current === this.props.id) {
+        this.canvas.startAnimation('')
+      }
+    }, 260)
+    window.addEventListener('resize', this.boundResizeCanvas)
   }
 
   public componentDidUpdate(prevProps: Props) {
-    if (this.canvas !== null) {
-      if (
-        prevProps.current !== this.props.current &&
-        this.props.current === this.props.id
-      ) {
-        this.canvas.startAnimation()
+    if (this.canvas !== null && prevProps.current !== this.props.current) {
+      if (this.props.current === this.props.id) {
+        this.canvas.startAnimation('')
       } else if (this.props.current !== this.props.id) {
         this.canvas.stopAnimation()
       }
@@ -59,8 +49,8 @@ class Slide extends React.Component<Props, State> {
   }
 
   public componentWillUnmount() {
+    this.canvas.stopAnimation()
     window.removeEventListener('resize', this.boundResizeCanvas)
-    window.removeEventListener('mousemove', this.boundMouseMove)
   }
 
   public resizeCanvas = () => {
@@ -71,22 +61,13 @@ class Slide extends React.Component<Props, State> {
     }
   }
 
-  public mouseMove = (e: any) => {
-    // if(e.target.nodeName.toLowerCase() === 'canvas') {
-    if (this.canvas) {
-      // this.canvas.onMouseMove(e)
-    }
-    // }
-  }
-
-  public imageLoaded = () => {
-    // this.props.set
-  }
-
   public render() {
     const { current, id, slide } = this.props
     return (
-      <li className={current === id ? 'slide current' : 'slide not-current'}>
+      <li
+        className={current === id ? 'slide current' : 'slide not-current'}
+        id={`slide-${id}`}
+      >
         <div className="content-container">
           <div className="left-col">
             <div className="count-container">
@@ -99,11 +80,15 @@ class Slide extends React.Component<Props, State> {
               </div>
               <h4>{slide.desc}</h4>
               {slide.link ? (
-                <a className="not-draggable" href={slide.link} target="blank">
+                <a
+                  className="not-draggable link"
+                  href={slide.link}
+                  target="blank"
+                >
                   Explore
                 </a>
               ) : (
-                <div className="explore">Link coming soon</div>
+                <div className="explore link">Link coming soon</div>
               )}
               {/*
 							Eventual link when case studies are added
@@ -123,7 +108,6 @@ class Slide extends React.Component<Props, State> {
                 draggable={false}
                 src={require(`../../../images/mockups/${slide.img}.png`)}
                 alt={slide.title}
-                onLoad={this.imageLoaded}
               />
             </div>
           </div>

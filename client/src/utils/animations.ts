@@ -1,5 +1,5 @@
 import { Power3, TimelineMax, TweenMax } from 'gsap'
-import getTypeFromClassName from './getTypeFromClassName'
+import { getTypeFromClassName, returnSlideElements } from './dom'
 
 const ease = Power3.easeOut
 
@@ -64,106 +64,92 @@ const homePageIntroAnimation = () => {
 }
 
 const workPageIntroAnimation = () => {
-  const controls = '.work.page .slider-controls'
-  const titleOverlay = '.work.page .slide.current .title-container span'
-  const title = '.work.page .slide.current h3'
-  const subText = [
-    '.work.page .slide.current h4',
-    '.work.page .slide.current .left-col .explore'
-  ]
-  const imgOverlay = '.work.page .slide.current .bg-img .overlay'
-  const bgImg = '.work.page .slide.current .bg-img'
-  const mainImg = '.work.page .slide.current .main-img'
-  const slideCount = '.work.page .slide.current .slide-count'
-
+  const root = document.querySelector('#slide-1') as HTMLElement
+  const elements = returnSlideElements(root)
   const tl = new TimelineMax()
 
-  tl.to(title, 0, { opacity: 0 })
+  tl.to(elements.title, 0, { opacity: 0 })
   tl.fromTo(
-    controls,
+    elements.controls,
     0.4,
     { y: 10, opacity: 0 },
     { delay: 0.4, y: 0, opacity: 1, ease }
   )
-  tl.fromTo(titleOverlay, 0.3, { scaleX: 0 }, { scaleX: 1, ease })
-  tl.to(title, 0, { opacity: 1 })
-  tl.to(titleOverlay, 0, { transformOrigin: 'right' })
-  tl.to(titleOverlay, 0.4, { scaleX: 0, ease })
+  tl.fromTo(elements.titleOverlay, 0.3, { scaleX: 0 }, { scaleX: 1, ease })
+  tl.to(elements.title, 0, { opacity: 1 })
+  tl.to(elements.titleOverlay, 0, { transformOrigin: 'right' })
+  tl.to(elements.titleOverlay, 0.4, { scaleX: 0, ease })
   tl.staggerFromTo(
-    subText,
+    elements.subText,
     0.6,
     { y: 10, opacity: 0 },
     { y: 0, opacity: 1, ease },
     0.1,
     '-=.3'
   )
-  tl.fromTo(bgImg, 0.3, { scaleX: 0 }, { scaleX: 1, ease }, '-=1')
+  tl.fromTo(elements.bgImage, 0.3, { scaleX: 0 }, { scaleX: 1, ease }, '-=1')
   tl.fromTo(
-    imgOverlay,
+    elements.imgOverlay,
     0.2,
     { transformOrigin: 'right', scaleX: 1 },
     { scaleX: 0, ease },
     '-=.5'
   )
   tl.fromTo(
-    mainImg,
+    elements.mainImage,
     1,
     { opacity: 0, y: 20 },
     { opacity: 1, y: 0, ease },
     '-=.6'
   )
-  tl.fromTo(slideCount, 0.6, { y: 98 }, { y: 0, ease }, '-=1.7')
+  tl.fromTo(elements.count, 0.6, { y: 98 }, { y: 0, ease }, '-=1.7')
 }
 
-const slideTransitionAnimation = () => {
-  const titleOverlay = '.work.page .slide.current .title-container span'
-  const title = '.work.page .slide.current h3'
-  const subText = [
-    '.work.page .slide.current h4',
-    '.work.page .slide.current .left-col a'
-  ]
-  const imgOverlay = '.work.page .slide.current .bg-img .overlay'
-  const bgImg = '.work.page .slide.current .bg-img'
-  const mainImg = '.work.page .slide.current .main-img'
-  const slideCount = '.work.page .slide.current .slide-count'
-
+const slideTransitionAnimation = (nodeId: number) => {
+  const current = document.querySelector(`#slide-${nodeId}`) as HTMLDivElement
+  const elements = returnSlideElements(current)
   const tl = new TimelineMax()
-  tl.to(title, 0, { opacity: 0 })
-  tl.to(title, 0, { opacity: 0, delay: 0.5 })
-  tl.to(imgOverlay, 0, { scaleX: 1, zIndex: 100, transformOrigin: 'right' })
+
+  tl.to(elements.title, 0, { opacity: 0, delay: 0.5 })
+  tl.to(elements.title, 0, { opacity: 0 })
+  tl.to(elements.imgOverlay, 0, {
+    scaleX: 1,
+    transformOrigin: 'right',
+    zIndex: 100
+  })
   tl.fromTo(
-    titleOverlay,
+    elements.titleOverlay,
     0.3,
     { scaleX: 0, transformOrigin: 'left' },
     { scaleX: 1, ease }
   )
-  tl.to(title, 0, { opacity: 1 })
-  tl.to(titleOverlay, 0, { transformOrigin: 'right' })
-  tl.to(titleOverlay, 0.4, { scaleX: 0, ease })
+  tl.to(elements.title, 0, { opacity: 1 })
+  tl.to(elements.titleOverlay, 0, { transformOrigin: 'right' })
+  tl.to(elements.titleOverlay, 0.4, { scaleX: 0, ease })
   tl.staggerFromTo(
-    subText,
+    elements.subText,
     0.6,
     { y: 10, opacity: 0 },
     { y: 0, opacity: 1, ease },
     0.1,
     '-=.3'
   )
-  tl.fromTo(bgImg, 0.3, { scaleX: 0 }, { scaleX: 1, ease }, '-=1')
+  tl.fromTo(elements.bgImage, 0.3, { scaleX: 0 }, { scaleX: 1, ease }, '-=1')
   tl.fromTo(
-    imgOverlay,
+    elements.imgOverlay,
     0.2,
     { transformOrigin: 'right', scaleX: 1 },
     { scaleX: 0, ease },
     '-=.6'
   )
   tl.fromTo(
-    mainImg,
+    elements.mainImage,
     1,
     { opacity: 0, y: 20 },
     { opacity: 1, y: 0, ease },
     '-=.6'
   )
-  tl.fromTo(slideCount, 0.8, { opacity: 0 }, { opacity: 1, ease }, '-=1.6')
+  tl.fromTo(elements.count, 0.8, { opacity: 0 }, { opacity: 1, ease }, '-=1.6')
 }
 
 export { slideTransitionAnimation }

@@ -47,12 +47,12 @@ class Slider extends React.Component<Props, State> {
         this.countDown()
         this.setState({ canScroll: false })
         setTimeout(() => this.setState({ canScroll: true }), 900)
-        slideTransitionAnimation()
+        slideTransitionAnimation(1)
       } else if (scroll > 0 && this.state.canScroll) {
         this.countUp()
         this.setState({ canScroll: false })
         setTimeout(() => this.setState({ canScroll: true }), 900)
-        slideTransitionAnimation()
+        slideTransitionAnimation(1)
       }
     }
   }
@@ -87,13 +87,13 @@ class Slider extends React.Component<Props, State> {
     }
   }
 
-  public setCurrentSlide = (slide: any, expanding: any) => {
+  public setCurrentSlide = (slide: number, expanding: boolean) => {
     const { updatePercentTraveled, updateCurrentSlide } = this.props
     updateCurrentSlide(slide)
     updatePercentTraveled(this.setPercentTraveled(slide - 1))
     // wait 1 ms until for state to reset before transitioning
     if (!expanding) {
-      setTimeout(() => slideTransitionAnimation(), 1)
+      setTimeout(() => slideTransitionAnimation(slide), 1)
     }
   }
 
