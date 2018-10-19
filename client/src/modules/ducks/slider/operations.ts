@@ -9,3 +9,5 @@ export const updateCurrentSlide = (current: number) =>
 
 export const updatePercentTraveled = (precentTraveled: number) =>
   Actions.updatePercentTraveled(precentTraveled)
+
+export const resetSlider = () => Actions.resetSlider()

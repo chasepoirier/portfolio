@@ -14,7 +14,7 @@ interface Props extends RouteComponentProps<{}> {
 
 interface State {
   data: {
-    username: string
+    email: string
     password: string
   }
   loading: boolean
@@ -24,16 +24,16 @@ interface State {
 class Login extends React.Component<Props, State> {
   public state = {
     data: {
-      password: '',
-      username: ''
+      email: '',
+      password: ''
     },
     errors: '',
     loading: false
   }
 
-  public submit = (data: any) => {
+  public submit = (data: State['data']) => {
     return axios.post('/api/admin/login', data).then(res => {
-      if (res.data.success) {
+      if (res.data.user) {
         localStorage.setItem('token', res.data.token)
         setAuthorizationHeader(res.data.token)
         this.props.history.push('/')
@@ -51,8 +51,11 @@ class Login extends React.Component<Props, State> {
   public onSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     this.setState({ loading: true })
-    this.submit(this.state.data).catch(err =>
-      this.setState({ errors: err.response.data.errors, loading: false })
+    this.submit(this.state.data).catch(
+      err =>
+        // tslint:disable:no-console
+        console.log(err)
+      // this.setState({ errors: err.response.data.errors, loading: false })
     )
   }
 
@@ -66,8 +69,8 @@ class Login extends React.Component<Props, State> {
               onChange={this.onChange}
               className="input"
               type="text"
-              placeholder="Username"
-              name="username"
+              placeholder="Email"
+              name="email"
             />
 
             <input

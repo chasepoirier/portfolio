@@ -20,6 +20,7 @@ import * as types from './types'
 // })
 
 export const Actions = {
+  resetSlider: () => createAction(types.RESET_SLIDER),
   toggleSliderMoving: (toggle: boolean) =>
     createAction(types.TOGGLE_SLIDER_MOVING, { toggle }),
   updateCurrentSlide: (current: number) =>

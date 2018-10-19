@@ -20,8 +20,9 @@ interface Props {
   slides: any
   textures: string[]
   slider: AppState['slider']
-  updateCurrentSlide: (current: number) => void
-  updatePercentTraveled: (percentTraveled: number) => void
+  resetSlider: typeof sliderOperations.resetSlider
+  updateCurrentSlide: typeof sliderOperations.updateCurrentSlide
+  updatePercentTraveled: typeof sliderOperations.updatePercentTraveled
 }
 
 class Slider extends React.Component<Props, State> {
@@ -37,6 +38,7 @@ class Slider extends React.Component<Props, State> {
 
   public componentWillUnmount() {
     window.removeEventListener('wheel', this.boundScroll)
+    this.props.resetSlider()
   }
 
   public onscroll = (e: any) => {
@@ -137,6 +139,7 @@ const mapStateToProps = (state: AppState) => ({
 export default connect(
   mapStateToProps,
   {
+    resetSlider: sliderOperations.resetSlider,
     updateCurrentSlide: sliderOperations.updateCurrentSlide,
     updatePercentTraveled: sliderOperations.updatePercentTraveled
   }

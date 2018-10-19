@@ -1,7 +1,7 @@
-import UserEndpoints from './User'
+import AdminEndpoints from './Admin'
 
 const api = {
-  user: UserEndpoints
+  admin: AdminEndpoints
 }
 
 export default api

@@ -21,6 +21,8 @@ const slider = (
       return { ...state, percentTraveled: action.payload.percentTraveled }
     case types.TOGGLE_SLIDER_MOVING:
       return { ...state, sliderIsMoving: action.payload.toggle }
+    case types.RESET_SLIDER:
+      return { ...initialState }
     default: {
       return state
     }

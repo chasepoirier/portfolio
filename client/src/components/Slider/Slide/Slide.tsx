@@ -28,7 +28,7 @@ class Slide extends React.Component<Props> {
      * animation of previous page is finished
      */
     setTimeout(() => {
-      this.canvas = new Canvas(this.props.texture)
+      this.canvas = new Canvas(this.props.texture, this.props.id)
       this.canvas.initCanvas(this.canvasRef.current)
 
       if (this.props.current === this.props.id) {

@@ -15,30 +15,26 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
-    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
-    "@fortawesome/react-fontawesome": "0.1.0-11",
     "axios": "^0.18.0",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.3",
+    "firebase": "^5.5.4",
+    "firebase-admin": "^6.0.0",
+    "forcedomain": "^1.0.0",
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "~1.9.0",
+    "serve-favicon": "~2.4.5"
+  },
+  "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
-    "bcrypt": "^2.0.1",
-    "body-parser": "~1.18.2",
-    "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
-    "dotenv": "^6.0.0",
-    "express": "^4.16.3",
-    "express-force-https": "^1.0.0",
-    "forcedomain": "^1.0.0",
     "husky": "^0.14.3",
-    "jsonwebtoken": "^8.3.0",
-    "lint-staged": "^7.0.4",
-    "mongoose": "^5.2.4",
-    "morgan": "~1.9.0",
-    "pug": "2.0.0-beta11",
-    "serve-favicon": "~2.4.5",
-    "systeminformation": "^3.42.4"
+    "lint-staged": "^7.0.4"
   },
   "lint-staged": {
     "*.{ts, tsx, js,json,css,md}": [

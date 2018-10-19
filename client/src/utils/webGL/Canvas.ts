@@ -1,6 +1,11 @@
 import * as THREE from 'three'
 import { Scene, Texture } from 'three'
-// import * as TWEEN from 'tween.js';
+
+const renderers: any[] = []
+
+for (let index = 0; index < 5; index++) {
+  renderers.push(new THREE.WebGLRenderer({ antialias: true }))
+}
 
 class Canvas {
   public width: number
@@ -14,13 +19,13 @@ class Canvas {
   public center: any
   public vLength: any
 
-  constructor(texture: any) {
+  constructor(texture: any, index: number) {
     this.width = 0
     this.height = 0
     this.texture = texture
     this.scene = new THREE.Scene()
     this.camera = new THREE.PerspectiveCamera(75, 0 / 0, 0.1, 1000)
-    this.renderer = new THREE.WebGLRenderer({ antialias: true })
+    this.renderer = renderers[index - 1]
 
     this.animation = null
 
@@ -40,6 +45,10 @@ class Canvas {
       // this.lights.map(light => this.scene.add(light))
       // this.camera.position.set(100, -400, 2000);
       this.camera.position.z = 3.4
+
+      // load texture then stop animation
+      this.startAnimation('')
+      setTimeout(this.stopAnimation, 50)
     }
   }
 
@@ -49,7 +58,7 @@ class Canvas {
       const v = this.plane.geometry.vertices[i]
       const dist = new THREE.Vector2(v.x, v.y).sub(this.center)
       const size = 2.8
-      const magnitude = 0.072
+      const magnitude = 0.052
       const duration = 950
       v.z = Math.sin(dist.length() / -size + ts / duration) * magnitude
     }

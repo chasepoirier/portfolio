@@ -29,7 +29,7 @@ const sliderMetaData = [
     desc:
       'Find consistent work by parterning with other freelancers and forming virtual agencies.',
     img: 'ripple',
-    link: 'http://madisonyocum.com/ripple',
+    link: 'http://www.madisonyocum.com/projects/ripple',
     title: 'Ripple Platform'
   }
 ]
