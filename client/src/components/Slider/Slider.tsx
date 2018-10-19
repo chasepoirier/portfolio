@@ -10,6 +10,7 @@ import SliderControls from './SliderControls'
 import SlideWrapper from './SlideWrapper'
 
 // utils
+import { Texture } from 'three'
 import './slider.css'
 
 interface State {
@@ -18,7 +19,7 @@ interface State {
 
 interface Props {
   slides: any
-  textures: string[]
+  textures: Texture[]
   slider: AppState['slider']
   resetSlider: typeof sliderOperations.resetSlider
   updateCurrentSlide: typeof sliderOperations.updateCurrentSlide

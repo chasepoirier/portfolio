@@ -6,8 +6,7 @@ import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 
-import index from './routes/index'
-import admin from './routes/admin'
+import routes from './routes'
 
 dotenv.config()
 
@@ -30,8 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, '../client/build')))
 app.use(cookieParser())
 
-app.use('/api', index)
-app.use('/api/admin', admin)
+app.use('/api/admin', routes.admin)
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'))

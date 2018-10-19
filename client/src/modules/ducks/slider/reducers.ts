@@ -1,13 +1,14 @@
+import sliderMetaData from 'src/data/sliderMetaData'
 import * as fromActions from './actions'
 import * as types from './types'
-
-// import * as types from './types'
 
 const initialState: types.SliderState = {
   currentSlide: 1,
   innerOffset: 45,
   percentTraveled: 0,
-  sliderIsMoving: false
+  sliderIsMoving: false,
+  slides: sliderMetaData,
+  textures: []
 }
 
 const slider = (
@@ -15,6 +16,8 @@ const slider = (
   action: fromActions.Actions
 ) => {
   switch (action.type) {
+    case types.LOAD_TEXTURES:
+      return { ...state, textures: action.payload.textures }
     case types.UPDATE_CURRENT_SLIDE:
       return { ...state, currentSlide: action.payload.current }
     case types.UPDATE_PERCENT_TRAVELED:

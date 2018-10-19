@@ -47,7 +47,10 @@ class SliderControls extends React.Component<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-    if (prevProps.slider.currentSlide !== this.props.slider.currentSlide) {
+    if (
+      prevProps.slider.currentSlide !== this.props.slider.currentSlide &&
+      !this.props.slider.sliderIsMoving
+    ) {
       // update the position of the controller
       this.calculateEndSliderPos(this.props.slider.currentSlide)
     }
@@ -87,6 +90,7 @@ class SliderControls extends React.Component<Props, State> {
 
   public handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (this.state.controllerIsClicked && this.controller.current) {
+      // tslint:disable:no-console
       const { style, offsetWidth } = this.controller.current
       const { innerOffset } = this.props.slider
       const pos = e.clientX - this.state.offset - offsetWidth / 2
@@ -95,6 +99,8 @@ class SliderControls extends React.Component<Props, State> {
       const totalLength = max + innerOffset * 2
 
       if (pos < -innerOffset) {
+        // tslint:disable:no-console
+        console.log('here')
         style.transform = `translateX(${-innerOffset}px)`
         this.calculatePercentTraveled(0, totalLength)
       } else if (pos > max + innerOffset) {

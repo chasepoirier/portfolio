@@ -20,18 +20,21 @@ const initialState: types.AdminState = {
   }
 }
 
-const user = (
-  state: types.AdminState['user'] = initialState.user,
+const location = (
+  state: types.AdminState['location'] = initialState.location,
   action: fromActions.Actions
 ) => {
   switch (action.type) {
-    case types.VERIFY_USER_REQUEST: {
-      return { ...state, loadin: true }
-    }
+    case types.LOCATION_REQUEST:
+      return { ...state, loading: true }
+    case types.LOCATION_SUCCESS:
+      return { ...state, data: action.payload, loading: false }
+    case types.LOCATION_FAIL:
+      return { ...state, errors: action.payload.error, loading: false }
     default: {
       return state
     }
   }
 }
 
-export default combineReducers({ user })
+export default combineReducers({ location })

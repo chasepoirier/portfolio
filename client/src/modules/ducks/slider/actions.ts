@@ -1,5 +1,6 @@
 import { createAction } from 'modules/utils'
 import { ActionsUnion } from 'modules/utils/types'
+import { Texture } from 'three'
 import * as types from './types'
 
 // export const updateCurrentSlide = (current: number) =>
@@ -20,6 +21,8 @@ import * as types from './types'
 // })
 
 export const Actions = {
+  loadTextures: (textures: Texture[]) =>
+    createAction(types.LOAD_TEXTURES, { textures }),
   resetSlider: () => createAction(types.RESET_SLIDER),
   toggleSliderMoving: (toggle: boolean) =>
     createAction(types.TOGGLE_SLIDER_MOVING, { toggle }),

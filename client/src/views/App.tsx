@@ -2,9 +2,13 @@
 import Contact from 'components/Contact'
 import Navbar from 'components/Navbar'
 import Sidebar from 'components/Sidebar'
+import { adminOperations } from 'ducks/admin'
+import { sliderOperations } from 'ducks/slider'
 // defaults
 import { History } from 'history'
+import { AppState } from 'modules/utils/types'
 import * as React from 'react'
+import { connect } from 'react-redux'
 import {
   Route,
   RouteComponentProps,
@@ -12,38 +16,26 @@ import {
   withRouter
 } from 'react-router-dom'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import * as THREE from 'three'
 import { introPageAnimation, outroPageAnimation } from 'utils/animations'
-import getCurrentLocation from 'utils/getCurrentLocation'
+import getIPAddress from 'utils/fetchIP'
+import setAuthHeaders from 'utils/setAuthHeaders'
 import { About, Blog, CaseStudy, Home, Login, NotFound, Work } from 'views'
-// Metadata
-import sliderMetaData from '../data/sliderMetaData'
-
-// utils
-
-// import { library } from '@fortawesome/fontawesome-svg-core';
-// import { fainstagram } from '@fortawesome/free-solid-svg-icons';
-
-// library.add(fainstagram);
 
 interface Props extends RouteComponentProps {
   history: History
   location: History['location']
+  slides: AppState['slider']['slides']
+  getCurrentLocation: typeof adminOperations.getCurrentLocation
+  loadTextures: typeof sliderOperations.loadTextures
 }
 
 interface State {
   loaded: boolean
-  location: {
-    city?: string
-    code?: string
-  }
-
   pageIsScrollable: boolean
   showContact: boolean
   sidebar: {
     positionIsFixed: boolean
   }
-  slides: any
   textures: any
 }
 
@@ -52,33 +44,19 @@ class App extends React.Component<Props, State> {
 
   public state = {
     loaded: false,
-    location: {
-      city: '',
-      code: ''
-    },
-
     pageIsScrollable: false,
     showContact: false,
     sidebar: {
       positionIsFixed: true
     },
-    slides: [],
     textures: []
   }
 
   public componentWillMount() {
-    const textures = sliderMetaData.map(slide => {
-      return new THREE.TextureLoader().load(
-        require(`../images/bg-imgs/${slide.img}.jpg`)
-      )
-    })
-    this.setState({
-      slides: sliderMetaData,
-      textures
-    })
-    getCurrentLocation().then(location => {
-      this.setState({ location, loaded: true })
-    })
+    const { getCurrentLocation, loadTextures, slides } = this.props
+    setAuthHeaders(localStorage.getItem('token'))
+    getIPAddress().then((ref: any) => getCurrentLocation(ref.ip))
+    loadTextures(slides)
   }
 
   public componentDidUpdate(prevProps: any, prevState: State) {
@@ -111,7 +89,7 @@ class App extends React.Component<Props, State> {
   }
 
   public render() {
-    const { slides, textures, location, pageIsScrollable } = this.state
+    const { pageIsScrollable } = this.state
     return (
       <div className="App">
         <div
@@ -146,16 +124,13 @@ class App extends React.Component<Props, State> {
                 <Route
                   exact={true}
                   path="/case-studies"
-                  render={() => <Work slides={slides} textures={textures} />}
+                  render={() => <Work />}
                 />
                 <Route path="/case-studies/:id" render={() => <CaseStudy />} />
                 <Route
                   path="/about"
                   render={() => (
-                    <About
-                      toggleScrollablePage={this.toggleScrollablePage}
-                      location={location}
-                    />
+                    <About toggleScrollablePage={this.toggleScrollablePage} />
                   )}
                 />
                 <Route path="/blog" render={() => <Blog />} />
@@ -176,4 +151,14 @@ class App extends React.Component<Props, State> {
   }
 }
 
-export default withRouter(App)
+const mapStateToProps = (state: AppState) => ({
+  slides: state.slider.slides
+})
+
+export default connect(
+  mapStateToProps,
+  {
+    getCurrentLocation: adminOperations.getCurrentLocation,
+    loadTextures: sliderOperations.loadTextures
+  }
+)(withRouter(App))

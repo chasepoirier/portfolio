@@ -2,10 +2,11 @@ import * as React from 'react'
 // import { Link } from "react-router-dom";
 import Canvas from 'utils/webGL'
 
+import { Texture } from 'three'
 import './slide.css'
 
 interface Props {
-  texture: string
+  texture: Texture
   current: number
   id: number
   slide: any

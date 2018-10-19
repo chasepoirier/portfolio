@@ -1,3 +1,4 @@
+import { AppState } from 'modules/utils/types'
 import * as React from 'react'
 import './content-container.css'
 
@@ -8,7 +9,7 @@ const icons = {
 }
 
 interface Props {
-  location: any
+  location: AppState['admin']['location']
 }
 
 const ContentContainer = ({ location }: Props) => (
@@ -17,7 +18,9 @@ const ContentContainer = ({ location }: Props) => (
     <img src={require('../../../images/me.jpg')} alt="it's me" />
     <div className="sub-header-wrapper">
       <div className="location">
-        Current Location: {`${location.city}, ${location.code}`}
+        {location.loading
+          ? `finding Chase...`
+          : `Current Location: ${location.data.city}, ${location.data.code}`}
       </div>
       <div className="social">
         <a href={icons.linkedin} target="blank">

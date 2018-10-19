@@ -19,7 +19,7 @@ class Canvas {
   public center: any
   public vLength: any
 
-  constructor(texture: any, index: number) {
+  constructor(texture: Texture, index: number) {
     this.width = 0
     this.height = 0
     this.texture = texture

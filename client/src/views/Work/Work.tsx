@@ -1,10 +1,12 @@
 import Slider from 'components/Slider'
+import { AppState } from 'modules/utils/types'
 import * as React from 'react'
+import { connect } from 'react-redux'
 import './work.css'
 
 interface Props {
-  slides: any
-  textures: any
+  slides: AppState['slider']['slides']
+  textures: AppState['slider']['textures']
 }
 
 class Work extends React.Component<Props> {
@@ -18,4 +20,9 @@ class Work extends React.Component<Props> {
   }
 }
 
-export default Work
+const mapStateToProps = (state: AppState) => ({
+  slides: state.slider.slides,
+  textures: state.slider.textures
+})
+
+export default connect(mapStateToProps)(Work)

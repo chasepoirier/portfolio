@@ -34,8 +34,8 @@ class Login extends React.Component<Props, State> {
   public submit = (data: State['data']) => {
     return axios.post('/api/admin/login', data).then(res => {
       if (res.data.user) {
-        localStorage.setItem('token', res.data.token)
-        setAuthorizationHeader(res.data.token)
+        localStorage.setItem('token', res.data.user.token)
+        setAuthorizationHeader(res.data.user.token)
         this.props.history.push('/')
       } else {
         // console.log('no')

@@ -1,14 +1,14 @@
 import api from 'modules/api'
+import { AdminAPI } from 'modules/api/types'
 import { Dispatch } from 'redux'
 import { Actions } from './actions'
-import { AdminState } from './types'
 
-export const verifyUser = () => (dispatch: Dispatch) => {
-  dispatch(Actions.verifyUserRequest())
+export const getCurrentLocation = (ip: string) => (dispatch: Dispatch) => {
+  dispatch(Actions.locationRequest())
   return api.admin
-    .getCurrentLocation()
-    .then((location: AdminState['location']['data']) =>
+    .getCurrentLocation(ip)
+    .then((location: AdminAPI['location']) =>
       dispatch(Actions.locationSuccess(location))
     )
-    .catch((error: string) => dispatch(Actions.locationFail(error)))
+    .catch(err => dispatch(Actions.locationFail(err)))
 }
