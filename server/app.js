@@ -16,19 +16,19 @@ const app = express()
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-if (process.env.NODE_ENV !== 'dev') {
-  app.use(function(req, res, next) {
-    if (req.headers['x-forwarded-proto'] !== 'https') {
-      return res.redirect(301, ['https://', req.get('Host'), req.url].join(''))
-    }
-    return next()
-  })
-  // app.use(forceDomain({
-  //     hostname: 'chasepoirier.com',
-  //     protocol: 'https'
-  // }));
-  // app.use(forceSsl);
-}
+// if (process.env.NODE_ENV !== 'dev') {
+//   app.use(function(req, res, next) {
+//     if (req.headers['x-forwarded-proto'] !== 'https') {
+//       return res.redirect(301, ['https://', req.get('Host'), req.url].join(''))
+//     }
+//     return next()
+//   })
+// app.use(forceDomain({
+//     hostname: 'chasepoirier.com',
+//     protocol: 'https'
+// }));
+// app.use(forceSsl);
+// }
 
 app.use(logger('dev'))
 app.use(bodyParser.json())

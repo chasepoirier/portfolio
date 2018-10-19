@@ -10,7 +10,6 @@ router.get('/get_location', (req, res) => {
 
 router.post('/set_location', (req, res) => {
   if (req.currentUser) {
-    console.log('hre')
     getComputerLocation(req.body.ip).then(place => {
       if (place.city) {
         console.log(place)

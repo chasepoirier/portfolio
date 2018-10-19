@@ -6,7 +6,6 @@ const router = express.Router()
 
 router.post('/login', (req, res) => {
   const { email, password } = req.body
-  console.log(email, password)
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
