@@ -28,6 +28,18 @@
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.1.10",
+    "@types/enzyme-adapter-react-16": "^1.0.2",
+    "@types/gsap": "^1.19.2",
+    "@types/jest": "^23.3.5",
+    "@types/node": "^10.11.7",
+    "@types/react": "^16.4.16",
+    "@types/react-dom": "^16.0.9",
+    "@types/react-redux": "^6.0.9",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/react-transition-group": "^2.0.14",
+    "@types/redux-logger": "^3.0.6",
+    "@types/three": "^0.93.3",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
