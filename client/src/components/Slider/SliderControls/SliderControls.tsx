@@ -21,6 +21,7 @@ interface State {
 class SliderControls extends React.Component<Props, State> {
   private boundHandleMouseMove: any
   private boundHandleMouseUp: any
+  private boundHandleTouchMove: any
 
   private controller = React.createRef<HTMLDivElement>()
 
@@ -34,16 +35,21 @@ class SliderControls extends React.Component<Props, State> {
 
     this.boundHandleMouseMove = this.handleMouseMove.bind(this)
     this.boundHandleMouseUp = this.handleMouseUp.bind(this)
+    this.boundHandleTouchMove = this.handleTouchMove.bind(this)
   }
 
   public componentDidMount() {
     window.addEventListener('mousemove', this.boundHandleMouseMove)
     window.addEventListener('mouseup', this.boundHandleMouseUp)
+    window.addEventListener('touchend', this.boundHandleMouseUp)
+    window.addEventListener('touchmove', this.boundHandleTouchMove)
   }
 
   public componentWillUnmount() {
     window.removeEventListener('mousemove', this.boundHandleMouseMove)
     window.removeEventListener('mouseup', this.boundHandleMouseUp)
+    window.removeEventListener('touchend', this.boundHandleMouseUp)
+    window.removeEventListener('touchmove', this.boundHandleTouchMove)
   }
 
   public componentDidUpdate(prevProps: Props) {
@@ -88,12 +94,12 @@ class SliderControls extends React.Component<Props, State> {
     }
   }
 
-  public handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+  public calulatePosition = (clientX: number) => {
     if (this.state.controllerIsClicked && this.controller.current) {
       // tslint:disable:no-console
       const { style, offsetWidth } = this.controller.current
       const { innerOffset } = this.props.slider
-      const pos = e.clientX - this.state.offset - offsetWidth / 2
+      const pos = clientX - this.state.offset - offsetWidth / 2
 
       const max = this.calculateTotalSliderLength()
       const totalLength = max + innerOffset * 2
@@ -112,6 +118,14 @@ class SliderControls extends React.Component<Props, State> {
         this.calculatePercentTraveled(pos + innerOffset, totalLength)
       }
     }
+  }
+
+  public handleTouchMove = (e: React.TouchEvent<HTMLElement>) => {
+    this.calulatePosition(e.touches[0].clientX)
+  }
+
+  public handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    this.calulatePosition(e.clientX)
   }
 
   public calculateCurrentSlide = (pos: number, totalLength: number) => {
@@ -182,6 +196,7 @@ class SliderControls extends React.Component<Props, State> {
           <div
             ref={this.controller}
             onMouseDown={this.handleMouseDown}
+            onTouchStart={this.handleMouseDown}
             className="controller-wrapper"
           >
             <div className="controller">

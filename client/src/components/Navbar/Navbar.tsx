@@ -1,14 +1,14 @@
 import { toggleContactForm } from 'ducks/layout/operations'
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom'
 import { Dispatch } from 'redux'
 import { ReduxState } from 'src/types/redux'
 import MobileLinks from './MobileLinks'
 import MobileNav from './MobileNav'
 import './navbar.css'
 
-interface Props {
+interface Props extends RouteComponentProps<{}> {
   menu: ReduxState['layout']['mobile']['menu']
   toggleContact: typeof toggleContactForm
 }
@@ -57,7 +57,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleContact: (toggle: boolean) => dispatch(toggleContactForm(toggle))
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Navbar)
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Navbar)
+)

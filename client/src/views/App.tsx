@@ -63,31 +63,43 @@ class App extends React.Component<Props> {
       <div className="App">
         <div className="main-page" ref={this.pageRef}>
           <Navbar />
-          <TransitionGroup className="transition-wrapper">
-            <Sidebar />
-            <CSSTransition
-              key={this.props.location.key}
-              classNames="fade"
-              timeout={500}
-              appear={true}
-              onEnter={node => introPageAnimation(node)}
-              onExit={node => outroPageAnimation(node)}
-            >
-              <Switch location={this.props.location}>
-                <Route exact={true} path="/" component={Home} />
-                <Route exact={true} path="/case-studies" component={Work} />
-                <Route path="/case-studies/:id" component={CaseStudy} />
-                <Route path="/about" component={About} />
-                <Route path="/blog" component={Blog} />
-                <Route path="/admin/login" component={Login} />
-                <Route component={NotFound} />
-              </Switch>
-            </CSSTransition>
-          </TransitionGroup>
+          <div className="transition-wrapper">
+            {this.renderSidebar()}
+            <TransitionGroup>
+              <CSSTransition
+                key={this.props.location.key}
+                classNames="fade"
+                timeout={500}
+                appear={true}
+                onEnter={node => introPageAnimation(node)}
+                onExit={node => outroPageAnimation(node)}
+              >
+                <Switch location={this.props.location}>
+                  <Route exact={true} path="/" component={Home} />
+                  <Route exact={true} path="/case-studies" component={Work} />
+                  <Route path="/case-studies/:id" component={CaseStudy} />
+                  <Route path="/about" component={About} />
+                  <Route path="/blog" component={Blog} />
+                  <Route path="/admin/login" component={Login} />
+                  <Route component={NotFound} />
+                </Switch>
+              </CSSTransition>
+            </TransitionGroup>
+          </div>
         </div>
         <Contact />
       </div>
     )
+  }
+
+  private renderSidebar = () => {
+    const { pathname } = this.props.history.location
+    // tslint:disable:no-console
+    console.log(pathname)
+    if (pathname === '/' || pathname === '/case-studies') {
+      return <Sidebar />
+    }
+    return null
   }
 }
 
@@ -96,10 +108,12 @@ const mapStateToProps = (state: ReduxState) => ({
   slides: state.slider.slides
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    getCurrentLocation: adminOperations.getCurrentLocation,
-    loadTextures: sliderOperations.loadTextures
-  }
-)(withRouter(App))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      getCurrentLocation: adminOperations.getCurrentLocation,
+      loadTextures: sliderOperations.loadTextures
+    }
+  )(App)
+)

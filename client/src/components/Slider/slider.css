@@ -55,3 +55,10 @@
     margin-left: 0;
   }
 }
+
+@media (max-width: 768px) {
+  .slider {
+    margin-left: 0;
+    width: 100%;
+  }
+}
