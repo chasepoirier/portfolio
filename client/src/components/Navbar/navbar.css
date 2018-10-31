@@ -80,12 +80,8 @@
   animation: none;
 }
 
-.navbar
-  .center-col
-  a.active:before
-  .navbar
-  .center-col
-  .contact-link.active:before {
+.navbar .center-col a.active:before,
+.navbar .center-col .contact-link.active:before {
   transform-origin: left;
   transition: transform 0.2s;
   transform: scaleX(1);
