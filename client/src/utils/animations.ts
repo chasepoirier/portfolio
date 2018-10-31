@@ -3,6 +3,27 @@ import { getTypeFromClassName, returnSlideElements } from './dom'
 
 const ease = Power3.easeOut
 
+export const animateMobileLinks = (activating: boolean) => {
+  const elements = document.querySelectorAll('.mobile-links .link')
+  if (activating) {
+    TweenMax.staggerFromTo(
+      elements,
+      0.7,
+      { opacity: 0, y: -8 },
+      { opacity: 1, y: 0, delay: 0.15, ease },
+      0.11
+    )
+  } else {
+    TweenMax.staggerFromTo(
+      elements,
+      0.2,
+      { opacity: 1, y: 0 },
+      { opacity: 0, y: -5 },
+      0.05
+    )
+  }
+}
+
 export const animateSlider = (duration: number, distance: number) => {
   TweenMax.to('.slide-container', duration, {
     ease: Power3.easeOut,
@@ -110,8 +131,8 @@ const slideTransitionAnimation = (nodeId: number) => {
   const elements = returnSlideElements(current)
   const tl = new TimelineMax()
 
-  tl.to(elements.title, 0, { opacity: 0, delay: 0.5 })
   tl.to(elements.title, 0, { opacity: 0 })
+  tl.to(elements.title, 0, { opacity: 0, delay: 0.5 })
   tl.to(elements.imgOverlay, 0, {
     scaleX: 1,
     transformOrigin: 'right',

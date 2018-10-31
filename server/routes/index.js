@@ -1,7 +1,9 @@
 import admin from './admin'
+import mail from './mail'
 
 const routes = {
-  admin
+  admin,
+  mail
 }
 
 export default routes

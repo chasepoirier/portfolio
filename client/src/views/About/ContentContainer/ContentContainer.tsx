@@ -1,5 +1,5 @@
-import { AppState } from 'modules/utils/types'
 import * as React from 'react'
+import { ReduxState } from 'src/types/redux'
 import './content-container.css'
 
 const icons = {
@@ -9,7 +9,7 @@ const icons = {
 }
 
 interface Props {
-  location: AppState['admin']['location']
+  location: ReduxState['admin']['location']
 }
 
 const ContentContainer = ({ location }: Props) => (

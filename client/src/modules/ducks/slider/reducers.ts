@@ -25,7 +25,7 @@ const slider = (
     case types.TOGGLE_SLIDER_MOVING:
       return { ...state, sliderIsMoving: action.payload.toggle }
     case types.RESET_SLIDER:
-      return { ...initialState }
+      return { ...initialState, textures: state.textures }
     default: {
       return state
     }

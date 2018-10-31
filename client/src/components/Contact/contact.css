@@ -93,7 +93,7 @@
   border-bottom: 1px solid #9a9a9a;
   font-size: 16px;
   font-family: 'roboto';
-  font-weight: 500;
+  font-weight: 300;
   resize: none;
   outline: none;
   padding-bottom: 8px;
@@ -105,6 +105,15 @@
 .contact .content-container .two-col input:placeholder,
 .contact .content-container .two-col textarea:placeholder {
   color: rgba(255, 255, 255, 0.6);
+}
+
+.contact .content-container .two-col input:-webkit-autofill {
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+  caret-color: #fff;
+}
+
+.contact .content-container .two-col input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff;
 }
 
 .contact .content-container .two-col input:focus,
@@ -154,4 +163,10 @@
 
 .contact .content-container .two-col .submit-btn:hover {
   opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .contact {
+    max-height: none;
+  }
 }

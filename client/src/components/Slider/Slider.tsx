@@ -1,5 +1,4 @@
 import { sliderOperations } from 'ducks/slider'
-import { AppState } from 'modules/utils/types'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { slideTransitionAnimation } from 'utils/animations'
@@ -10,6 +9,7 @@ import SliderControls from './SliderControls'
 import SlideWrapper from './SlideWrapper'
 
 // utils
+import { ReduxState } from 'src/types/redux'
 import { Texture } from 'three'
 import './slider.css'
 
@@ -20,7 +20,7 @@ interface State {
 interface Props {
   slides: any
   textures: Texture[]
-  slider: AppState['slider']
+  slider: ReduxState['slider']
   resetSlider: typeof sliderOperations.resetSlider
   updateCurrentSlide: typeof sliderOperations.updateCurrentSlide
   updatePercentTraveled: typeof sliderOperations.updatePercentTraveled
@@ -133,7 +133,7 @@ class Slider extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: ReduxState) => ({
   slider: state.slider
 })
 

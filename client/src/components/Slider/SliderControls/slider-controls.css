@@ -138,3 +138,6 @@
 .slider-controls .numbers-container .number:hover {
   color: #444;
 }
+
+@media (max-width: 1100px) {
+}

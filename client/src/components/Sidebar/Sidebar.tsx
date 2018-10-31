@@ -1,4 +1,7 @@
+import { toggleContactForm } from 'ducks/layout/operations'
 import * as React from 'react'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
 import './sidebar.css'
 
 const icons = [
@@ -29,21 +32,26 @@ const Icon = ({ icon }: { icon: any }) => (
 )
 
 interface Props {
-  toggleContactForm: any
-  fixed: any
-  display: any
+  toggleContact: typeof toggleContactForm
 }
 
-const Sidebar = ({ toggleContactForm, fixed, display }: Props) => (
-  <div className={display ? 'static-container' : 'none'}>
+const Sidebar = ({ toggleContact }: Props) => (
+  <div className="static-container">
     <div className="sidebar">
       {renderIcons()}
       <div className="divider" />
-      <div onClick={() => toggleContactForm(true)} className="chat-btn">
+      <div onClick={() => toggleContact(true)} className="chat-btn">
         <div className="btn-text" />
       </div>
     </div>
   </div>
 )
 
-export default Sidebar
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  toggleContact: (toggle: boolean) => dispatch(toggleContactForm(toggle))
+})
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Sidebar)

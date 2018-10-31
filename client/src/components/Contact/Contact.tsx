@@ -1,5 +1,10 @@
 import * as React from 'react'
 
+import { toggleContactForm } from 'ducks/layout/operations'
+import { resetEmailState, sendEmailRequest } from 'ducks/mail/operations'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+import { ReduxState } from 'src/types/redux'
 import './contact.css'
 
 interface State {
@@ -11,8 +16,10 @@ interface State {
 }
 
 interface Props {
-  scrollable: any
-  toggleContactForm: any
+  contact: ReduxState['mail']['contact']
+  toggleContactForm: typeof toggleContactForm
+  sendEmail: (data: ContactBody) => Promise<{}>
+  resetEmailState: () => void
 }
 
 class Contact extends React.Component<Props, State> {
@@ -23,6 +30,7 @@ class Contact extends React.Component<Props, State> {
       name: ''
     }
   }
+
   public onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -34,21 +42,37 @@ class Contact extends React.Component<Props, State> {
     })
   }
 
+  public handleCloseClick = () => {
+    this.props.toggleContactForm(false)
+    this.resetEmailState()
+  }
+
   public handleFormSubmit = () => {
-    // tslint:disable:no-console
-    console.log('submitted form', this.state.form)
+    this.props.sendEmail(this.state.form)
+  }
+
+  public resetEmailState = () => {
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        form: {
+          email: '',
+          message: '',
+          name: ''
+        }
+      })
+      this.props.resetEmailState()
+    }, 500)
   }
 
   public render() {
     const { name, email, message } = this.state.form
+    const { contact } = this.props
     return (
-      <div className={this.props.scrollable ? 'contact scrollable' : 'contact'}>
+      <div className="contact">
         <div className="page-wrapper">
           <div className="close-container">
-            <div
-              onClick={() => this.props.toggleContactForm(false)}
-              className="close"
-            />
+            <div onClick={this.handleCloseClick} className="close" />
           </div>
           <div className="content-container">
             <div className="one-col">
@@ -86,8 +110,9 @@ class Contact extends React.Component<Props, State> {
                   onChange={this.onChange}
                 />
               </div>
+              {contact.error && contact.error}
               <div onClick={this.handleFormSubmit} className="submit-btn">
-                Get in Touch
+                {this.calculateButtonText()}
               </div>
             </div>
           </div>
@@ -96,6 +121,31 @@ class Contact extends React.Component<Props, State> {
       </div>
     )
   }
+
+  private calculateButtonText = () => {
+    const { contact } = this.props
+    if (contact.submitting) {
+      return 'Sending...'
+    }
+    if (contact.result) {
+      return 'Message Sent'
+    }
+    return 'Get in Touch'
+  }
 }
 
-export default Contact
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  resetEmailState: () => dispatch(resetEmailState()),
+  sendEmail: (data: ContactBody) => sendEmailRequest(data)(dispatch),
+  toggleContactForm: (toggle: boolean) => dispatch(toggleContactForm(toggle))
+})
+
+const mapStateToProps = (state: ReduxState) => ({
+  contact: state.mail.contact,
+  layout: state.layout
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Contact)

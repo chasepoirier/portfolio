@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, '../client/build')))
 app.use(cookieParser())
 
 app.use('/api/admin', routes.admin)
+app.use('/api/mail', routes.mail)
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'))

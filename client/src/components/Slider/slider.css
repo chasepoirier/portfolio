@@ -1,13 +1,3 @@
-@keyframes delay-overflow {
-  from {
-    overflow: visible;
-  }
-
-  to {
-    overflow: hidden;
-  }
-}
-
 .slider {
   height: 100%;
   width: calc(100% - 120px);
@@ -27,7 +17,6 @@
   display: flex;
   align-items: center;
 }
-
 
 .slider .slide-wrapper.moving {
   overflow: visible;
@@ -54,4 +43,15 @@
 
 .slider .slide-wrapper.moving .expand-container {
   transform: scale(0.75);
+}
+
+@media (max-width: 1100px) {
+  .slider {
+    margin-left: 0;
+    width: 95%;
+  }
+
+  .slider .slide-wrapper {
+    margin-left: 0;
+  }
 }
