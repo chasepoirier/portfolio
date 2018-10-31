@@ -84,12 +84,6 @@ const ContentContainer = ({ location }: Props) => (
         <li>Express / Node</li>
         <li>MongoDB / Firebase</li>
       </ul>
-      <br />
-      I'm just as excited as your are to launch an awesome new technology
-      product into the world so...
-      <br />
-      <br />
-      Let's collaborate on something awesome.
     </div>
   </div>
 )

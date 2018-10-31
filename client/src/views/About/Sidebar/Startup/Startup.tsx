@@ -1,20 +1,20 @@
 import * as React from 'react'
 import './startup.css'
 
-const Startup = () => (
+interface Props {
+  image: string
+  title: string
+  desc: string
+}
+
+const Startup = ({ image, title, desc }: Props) => (
   <div className="startup">
     <div className="icon-container">
-      <img src="null" alt="icon" />
+      <img src={image} alt="icon" />
     </div>
     <div className="text-container">
-      <div className="title">The Coding Nomad Kit</div>
-      <div className="desc">
-        Teaches aspiring developers how to build a successful freelance
-        business.
-      </div>
-      <a href="https://codingnomadkit.com" target="blank">
-        Explore
-      </a>
+      <div className="title">{title}</div>
+      <div className="desc">{desc}</div>
     </div>
   </div>
 )

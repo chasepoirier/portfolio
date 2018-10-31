@@ -45,3 +45,32 @@
   margin: 0 5px;
   font-size: 1.1em;
 }
+
+@media (max-width: 960px) {
+  .page.about .main-container {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .page.about .main-container .sub-header-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .page.about .main-container .sub-header-wrapper .location {
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .page.about .main-container .sub-header-wrapper a {
+    padding-right: 20px;
+  }
+
+  .page.about .main-container .text {
+    font-size: 16px;
+  }
+}
