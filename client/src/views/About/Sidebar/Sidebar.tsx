@@ -16,7 +16,7 @@ const Sidebar = () => (
         Other Things I Do
       </h2>
       {Startups.map((s: Startup) => (
-        <Startup title={s.title} image={s.image} desc={s.desc} />
+        <Startup url={s.url} title={s.title} image={s.image} desc={s.desc} />
       ))}
     </div>
   </div>
@@ -28,22 +28,26 @@ interface Startup {
   desc: string
   image: string
   title: string
+  url: string
 }
 
 const Startups: Startup[] = [
   {
     desc: 'Teaching developers how to build a freelance business.',
     image: cnk,
-    title: 'Coding Nomad Kit'
+    title: 'Coding Nomad Kit',
+    url: 'https://codingnomadkit.com'
   },
   {
     desc: 'A startup studio for early stage businesses',
     image: udio,
-    title: 'Udio Ventures'
+    title: 'Udio Ventures',
+    url: 'https://udioventures.com'
   },
   {
     desc: 'Helping connect freelancers to long-term clients',
     image: rt,
-    title: 'Coding Nomad Kit'
+    title: 'Rising Talent',
+    url: 'http://www.madisonyocum.com/projects/ripple'
   }
 ]

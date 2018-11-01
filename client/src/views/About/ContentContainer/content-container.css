@@ -35,6 +35,7 @@
   color: #222;
   transition: all 0.2s;
   opacity: 1;
+  padding-left: 15px;
 }
 
 .page.about .main-container .sub-header-wrapper a:hover {
@@ -68,6 +69,7 @@
 
   .page.about .main-container .sub-header-wrapper a {
     padding-right: 20px;
+    padding-left: 0;
   }
 
   .page.about .main-container .text {

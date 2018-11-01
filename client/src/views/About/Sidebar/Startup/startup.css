@@ -27,6 +27,8 @@
 
 .startup .text-container .title {
   margin-bottom: 5px;
+  color: #222;
+  text-decoration: none;
   font-weight: 600;
 }
 
