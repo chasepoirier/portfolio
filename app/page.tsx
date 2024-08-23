@@ -1,7 +1,13 @@
-import Image from "next/image";
+import HomeHero from "@/components/home/hero";
+import Navbar from "@/components/navbar";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+    <>
+      <Navbar />
+      <main className="w-95% max-w-screen-xl mx-auto">
+        <HomeHero />
+      </main>
+    </>
   );
 }

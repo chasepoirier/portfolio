@@ -14,10 +14,14 @@ const Navbar = () => {
             alt="Logo"
             className="object-contain"
           />
-          <div className="text-sm text-gray-600">Chase Poirier</div>
+          <div className="text-base text-gray-600">Chase Poirier</div>
         </Link>
-        <div className="flex justify-end gap-3 items-center">
-          <div className="button">Tell me about your project</div>
+        <div className="flex justify-end gap-8 items-center">
+          <Link href={"/work"}>Want to Work Together?</Link>
+          <Link href={"/newsletter"}>Newsletter</Link>
+          <div className="button bg-red-500">
+            <Image src="/youtube.svg" width={20} height={20} alt="Youtube" />
+          </div>
         </div>
       </div>
     </div>
