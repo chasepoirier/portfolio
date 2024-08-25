@@ -1,0 +1,47 @@
+"use client";
+import { subscribeToHomeNewsletter } from "@/services/kit";
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type Inputs = {
+  email: string;
+};
+
+const NewsletterForm = () => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const response = await subscribeToHomeNewsletter(data.email);
+
+    console.log(response);
+  };
+
+  const { register, handleSubmit, formState } = useForm<Inputs>();
+
+  return formState.isSubmitted ? (
+    <div className="px-8 py-2 border rounded border-gray-200 mt-12 max-w-screen-sm w-full">
+      <p className="font-semibold">You&apos;re In!</p>
+      <p className="text-sm text-gray-400">
+        Check your email for a confirmation email
+      </p>
+    </div>
+  ) : (
+    <form
+      action="#"
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex gap-2 p-2 border rounded-full w-full max-w-xl mt-12"
+    >
+      <input
+        {...register("email", { required: true })}
+        type="email"
+        placeholder="Your email address"
+        className="px-6 py-2 outline-none text-lg w-full"
+      />
+      {formState.errors.email && <span>This field is required</span>}
+
+      <button className="button text-lg" type="submit">
+        Subscribe
+      </button>
+    </form>
+  );
+};
+
+export default NewsletterForm;
