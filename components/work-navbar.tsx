@@ -1,3 +1,4 @@
+import { config } from "@/config";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -17,7 +18,7 @@ const WorkNavbar = () => {
           />
           <div className="text-base text-gray-600">Chase Poirier</div>
         </Link>
-        <div className="flex justify-end gap-8 items-center">
+        {/* <div className="flex justify-end gap-8 items-center">
           <Link className="text-sm" href={"/services"}>
             Services
           </Link>
@@ -27,11 +28,15 @@ const WorkNavbar = () => {
           <Link className="text-sm" href={"/portfolio"}>
             About Chase
           </Link>
-        </div>
+        </div> */}
 
-        <div className="button inline-flex items-center gap-2">
+        <Link
+          href={config.urls.introCall}
+          target="_blank"
+          className="button inline-flex items-center gap-2"
+        >
           Tell me about your project <FiArrowRight className="mt-[1px]" />
-        </div>
+        </Link>
       </div>
     </div>
   );

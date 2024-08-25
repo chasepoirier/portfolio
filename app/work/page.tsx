@@ -1,9 +1,11 @@
 import WorkNavbar from "@/components/work-navbar";
+import { config } from "@/config";
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaCoffee } from "react-icons/fa";
-import { FiCheck } from "react-icons/fi";
+import { FiArrowRight, FiCheck } from "react-icons/fi";
 
 export const metadata: Metadata = {
   title: "Chase Poirier | Fullstack Software Engineer",
@@ -18,21 +20,21 @@ const WorkPage = () => {
         <div className="flex flex-wrap-reverse md:flex-nowrap justify-between items-center gap-6 bg-gray-50 rounded-xl p-4 md:p-16">
           <div className="md:flex-1 w-full">
             <p className="text-xs uppercase text-gray-400 font-semibold">
-              Web & Mobile Software Consultant for Denver Based Agencies
+              Web & Mobile Software Consultant for non-technical Founders
             </p>
             <h1 className="md:text-5xl text-4xl font-bold mt-2 mb-4">
-              Deliver more software that your clients love
+              Deliver an MVP that <br /> your customers love
             </h1>
             <p className="text-lg">
-              No more cramming to launch products right before their deadline.
+              No more worrying if you&apos;re building the right product.
             </p>
             <p className="text-lg mt-2">
-              Let&apos;s work together on your next client project so that you:
+              Let&apos;s work together to create an MVP so that you:
             </p>
             <ul className="list-none list-inside text-lg mt-4 ml-2 mb-12">
               <li className="flex gap-2 items-center my-1">
                 <FiCheck className="text-purple-600" size={28} />
-                Exceed client expectations
+                Exceed customer expectations
               </li>
               <li className="flex gap-2 items-center my-1">
                 <FiCheck className="text-purple-600" size={28} />
@@ -41,17 +43,21 @@ const WorkPage = () => {
 
               <li className="flex gap-2 items-center my-1">
                 <FiCheck className="text-purple-600" size={28} />
-                Deliver higher quality, less buggy, software
+                Have higher quality, less buggy, software
               </li>
 
               <li className="flex gap-2 items-center my-1">
                 <FiCheck className="text-purple-600" size={28} />
-                Set your clients up for success as their business grows
+                Can scale smoothly as your customer base grows
               </li>
             </ul>
-            <div className="button inline-flex items-center gap-2 text-base">
-              Let&apos;s get a coffee <FaCoffee className="mt-[1px]" />
-            </div>
+            <Link
+              href={config.urls.introCall}
+              target="_blank"
+              className="button inline-flex items-center gap-2 text-base"
+            >
+              Schedule an Intro Call <FiArrowRight className="mt-[1px]" />
+            </Link>
           </div>
           <div className="md:flex-1 w-full flex justify-center">
             <Image
@@ -63,35 +69,6 @@ const WorkPage = () => {
             />
           </div>
         </div>
-
-        <section className="max-w-screen-xl mx-auto my-52 flex justify-between gap-12">
-          <div className="flex-1">
-            <Image
-              src="/map.png"
-              width={500}
-              height={500}
-              alt="Location"
-              className="shadow-md rounded-xl"
-            />
-          </div>
-          <div className="flex-1">
-            <h2 className="text-3xl font-bold mt-12 mb-4">
-              Hi, I&apos;m Chase
-            </h2>
-            <p className="text-lg">
-              I&apos;m a Denver based fullstack software engineer with more than
-              8 years experience in the field. I&apos;ve worked with a variety
-              of clients, from small startups to large enterprises, and
-              I&apos;ve helped them build and launch software that their users
-              love.
-            </p>
-            <p className="text-lg mt-4">
-              I work for Contentful but spend my free time consulting with
-              development agencies in the Denver area. I&apos;m passionate about
-              helping agencies deliver more software that their clients love.
-            </p>
-          </div>
-        </section>
       </main>
     </>
   );

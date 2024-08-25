@@ -9,7 +9,7 @@ const Navbar = async () => {
     `https://www.googleapis.com/youtube/v3/channels?${new URLSearchParams({
       id: "UCyeLrVCvHrAh3IBh2nMBS7g",
       part: "statistics",
-      key: config.google.apiKey as string,
+      key: config.google.apiKey,
     }).toString()}`
   ).then((res) => res.json());
 
@@ -18,7 +18,7 @@ const Navbar = async () => {
 
   return (
     <div className="flex justify-center max-w-screen-xl w-[95%] mx-auto">
-      <div className="flex justify-between items-center py-4 flex-1">
+      <div className="flex justify-between items-center py-6 flex-1">
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logo.png"
@@ -31,10 +31,9 @@ const Navbar = async () => {
         </Link>
         <div className="flex justify-end gap-8 items-center">
           <Link href={"/work"}>Want to build an app?</Link>
-          <Link href={"/newsletter"}>Newsletter</Link>
-          <div className="button bg-red-500 flex gap-2">
+          <div className="button bg-red-500 flex gap-2 hover:bg-red-700">
             <Image src="/youtube.svg" width={20} height={20} alt="Youtube" />
-            {millifiedSubCount}
+            {millifiedSubCount !== "0" ? millifiedSubCount : null}
           </div>
         </div>
       </div>
