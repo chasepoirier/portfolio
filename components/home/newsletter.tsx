@@ -18,7 +18,7 @@ const NewsletterForm = () => {
     <div className="px-8 py-2 border rounded border-gray-200 mt-12 max-w-screen-sm w-full">
       <p className="font-semibold">You&apos;re In!</p>
       <p className="text-sm text-gray-400">
-        Check your email for a confirmation email
+        Check your inbox for a confirmation email
       </p>
     </div>
   ) : (
@@ -36,7 +36,7 @@ const NewsletterForm = () => {
       {formState.errors.email && <span>This field is required</span>}
 
       <button className="button text-lg md:w-auto w-full" type="submit">
-        Subscribe
+        {formState.isSubmitting ? "Submitting..." : "Subscribe"}
       </button>
     </form>
   );
