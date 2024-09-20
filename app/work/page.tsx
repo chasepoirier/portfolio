@@ -1,11 +1,9 @@
 import WorkNavbar from "@/components/work-navbar";
-import { config } from "@/config";
+import CTAButton from "@/components/work/CTAButton";
 import { Metadata } from "next";
-import { usePlausible } from "next-plausible";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import { FiArrowRight, FiCheck } from "react-icons/fi";
+import { FiCheck } from "react-icons/fi";
 
 export const metadata: Metadata = {
   title: "Chase Poirier | Fullstack Software Engineer",
@@ -13,7 +11,6 @@ export const metadata: Metadata = {
 };
 
 const WorkPage = () => {
-  const plausible = usePlausible();
   return (
     <>
       <WorkNavbar />
@@ -52,14 +49,7 @@ const WorkPage = () => {
                 Can scale smoothly as your customer base grows
               </li>
             </ul>
-            <Link
-              onClick={() => plausible("schedule-intro-call")}
-              href={config.urls.introCall}
-              target="_blank"
-              className="button inline-flex items-center gap-2 text-base"
-            >
-              Schedule an Intro Call <FiArrowRight className="mt-[1px]" />
-            </Link>
+            <CTAButton />
           </div>
           <div className="md:flex-1 w-full flex justify-center">
             <Image
