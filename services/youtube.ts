@@ -1,6 +1,5 @@
 "use server";
-
-import { config } from "@/config";
+import { serverConfig } from "@/config-server";
 import millify from "millify";
 
 export const getYoutubeSubscriberCount = async () => {
@@ -8,7 +7,7 @@ export const getYoutubeSubscriberCount = async () => {
     `https://www.googleapis.com/youtube/v3/channels?${new URLSearchParams({
       id: "UCyeLrVCvHrAh3IBh2nMBS7g",
       part: "statistics",
-      key: config.google.apiKey,
+      key: serverConfig.google.apiKey,
     }).toString()}`
   ).then((res) => res.json());
 

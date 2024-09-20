@@ -1,6 +1,6 @@
 "use client";
 
-import { config } from "@/config";
+import { clientConfig } from "@/config-client";
 import { usePlausible } from "next-plausible";
 import Link from "next/link";
 import React from "react";
@@ -11,7 +11,7 @@ const CTAButton = () => {
   return (
     <Link
       onClick={() => plausible("schedule-intro-call")}
-      href={config.urls.introCall}
+      href={clientConfig.urls.introCall}
       target="_blank"
       className="button inline-flex items-center gap-2 text-base"
     >

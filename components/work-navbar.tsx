@@ -1,4 +1,4 @@
-import { config } from "@/config";
+import { clientConfig } from "@/config-client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -31,7 +31,7 @@ const WorkNavbar = () => {
         </div> */}
 
         <Link
-          href={config.urls.introCall}
+          href={clientConfig.urls.introCall}
           target="_blank"
           className="button inline-flex items-center gap-2"
         >
