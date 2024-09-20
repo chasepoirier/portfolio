@@ -1,6 +1,8 @@
 import HomeHero from "@/components/home/hero";
 import Navbar from "@/components/navbar";
 
+export const revalidate = 60; // Revalidate every 60 seconds (ISR)
+
 export default function Home() {
   return (
     <>
