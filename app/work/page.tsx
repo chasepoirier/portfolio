@@ -1,10 +1,10 @@
 import WorkNavbar from "@/components/work-navbar";
 import { config } from "@/config";
 import { Metadata } from "next";
+import { usePlausible } from "next-plausible";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaCoffee } from "react-icons/fa";
 import { FiArrowRight, FiCheck } from "react-icons/fi";
 
 export const metadata: Metadata = {
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 const WorkPage = () => {
+  const plausible = usePlausible();
   return (
     <>
       <WorkNavbar />
@@ -52,6 +53,7 @@ const WorkPage = () => {
               </li>
             </ul>
             <Link
+              onClick={() => plausible("schedule-intro-call")}
               href={config.urls.introCall}
               target="_blank"
               className="button inline-flex items-center gap-2 text-base"

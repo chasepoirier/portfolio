@@ -1,5 +1,6 @@
 "use client";
 import { subscribeToHomeNewsletter } from "@/services/kit";
+import { usePlausible } from "next-plausible";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -8,7 +9,9 @@ type Inputs = {
 };
 
 const NewsletterForm = () => {
+  const plausible = usePlausible();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    plausible("newsletter-submit", { props: { email: data.email } });
     await subscribeToHomeNewsletter(data.email);
   };
 

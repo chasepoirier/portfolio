@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
+import PlausibleProvider from "next-plausible";
 
 const figtree = Figtree({ subsets: ["latin"] });
 
@@ -16,6 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <PlausibleProvider domain="chasepoirier.com" />
+      </head>
       <body className={figtree.className}>{children}</body>
     </html>
   );
