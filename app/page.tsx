@@ -1,15 +1,30 @@
-import HomeHero from "@/components/home/hero";
-import Navbar from "@/components/navbar";
+import AllFeatures from "@/components/AllFeatures";
+import CTA from "@/components/CTA";
+import FAQ from "@/components/FAQ";
+import FeatureCallout from "@/components/FeatureCallout";
+import Footer from "@/components/Footer";
+import Hero from "@/components/home/hero";
+import LogoSlider from "@/components/LogoSlider";
+import Navbar from "@/components/Navbar";
+import StatStepper from "@/components/StatStepper";
+import Timeline from "@/components/Timeline";
+import { createSession } from "@/lib/stripe";
 
-export const revalidate = 60; // Revalidate every 60 seconds (ISR)
+export default async function Home() {
+  const stripeCheckoutUrl = await createSession();
 
-export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="w-95% max-w-screen-xl mx-auto">
-        <HomeHero />
-      </main>
+      <Hero />
+      <LogoSlider />
+      <StatStepper />
+      <FeatureCallout />
+      <AllFeatures />
+      <Timeline />
+      <FAQ />;
+      <CTA stripeCheckoutUrl={stripeCheckoutUrl} />
+      <Footer />
     </>
   );
 }

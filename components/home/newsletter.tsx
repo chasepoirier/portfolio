@@ -1,5 +1,5 @@
 "use client";
-import { subscribeToHomeNewsletter } from "@/services/kit";
+import { subscribeToHomeNewsletter } from "@/lib/kit";
 import { usePlausible } from "next-plausible";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
