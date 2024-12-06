@@ -8,11 +8,11 @@ import Hero from "@/components/home/hero";
 import Navbar from "@/components/Navbar";
 // import StatStepper from "@/components/StatStepper";
 // import Timeline from "@/components/Timeline";
-import { createSession } from "@/lib/stripe";
+// import { createSession } from "@/lib/stripe";
+
+export const revalidate = 1000;
 
 export default async function Home() {
-  const stripeCheckoutUrl = await createSession();
-
   return (
     <>
       <Navbar />
