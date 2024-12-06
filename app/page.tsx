@@ -5,7 +5,7 @@
 import Footer from "@/components/Footer";
 import Hero from "@/components/home/hero";
 // import LogoSlider from "@/components/LogoSlider";
-import { Navbar } from "../components/Navbar";
+import { Navbar } from "../components/nav-bar";
 // import StatStepper from "@/components/StatStepper";
 // import Timeline from "@/components/Timeline";
 // import { createSession } from "@/lib/stripe";
