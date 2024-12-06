@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Navbar = async () => {
+export const Navbar = async () => {
   const subCount = await getYoutubeSubscriberCount();
 
   return (
@@ -38,5 +38,3 @@ const Navbar = async () => {
     </div>
   );
 };
-
-export default Navbar;
