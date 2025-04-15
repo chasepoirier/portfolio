@@ -10,6 +10,6 @@ type Config = z.infer<typeof configSchema>;
 
 export const clientConfig: Config = configSchema.parse({
   urls: {
-    introCall: "https://calendly.com/chase-p2xn/30min",
+    introCall: "https://calendly.com/chase-p2xn/client-call",
   },
 });
